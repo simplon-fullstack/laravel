@@ -188,4 +188,10 @@
 
     * POUR UTILISER git EN LIGNE DE COMMANDE
 
+## MARDI 08: LARAVEL
+
+* JE DEPLACE LE DOSSIER mpequipe DANS LE DOSSIER laravel
+* DANS LE NAVIGATEUR MON SITE SERA ACCESSIBLE AVEC CETTE URL
+
+    http://localhost:81/simplon/laravel/mpequipe/public/
 
