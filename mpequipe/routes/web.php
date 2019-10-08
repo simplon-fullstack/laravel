@@ -32,3 +32,11 @@ Route::view('/galerie', 'galerie');
 // SI JE VEUX CHANGER LA PAGE D'ACCUEIL
 Route::view('/', 'accueil');
 
+// JE VAIS RAJOUTER LES PAGES espace-membre ET espace-admin
+// SI DANS LE NAVIGATEUR, LE VISITEUR VA SUR L'URL 
+// .../public/espace-membre
+// LAVAREL VA AFFICHER LE CODE DE 
+// resources/views/espace-membre.blade.php
+
+Route::view('/espace-membre', 'espace-membre');
+Route::view('/espace-admin', 'espace-admin');

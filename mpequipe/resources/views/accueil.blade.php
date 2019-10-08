@@ -25,6 +25,12 @@
         </section>
     </main>
     <footer>
+    <nav>
+            <ul>
+                <li><a href="<?php echo url('/espace-membre') ?>">membre</a></li>
+                <li><a href="<?php echo url('/espace-admin') ?>">admin</a></li>
+            </ul>
+        </nav>
         <p>tous droits réservés 2019</p>
     </footer>
 
