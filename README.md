@@ -190,347 +190,347 @@
 
 ## MARDI 08: LARAVEL
 
-* JE DEPLACE LE DOSSIER mpequipe DANS LE DOSSIER laravel
-* DANS LE NAVIGATEUR MON SITE SERA ACCESSIBLE AVEC CETTE URL
+    * JE DEPLACE LE DOSSIER mpequipe DANS LE DOSSIER laravel
+    * DANS LE NAVIGATEUR MON SITE SERA ACCESSIBLE AVEC CETTE URL
 
-    http://localhost:81/simplon/laravel/mpequipe/public/
+        http://localhost:81/simplon/laravel/mpequipe/public/
 
-* RESUME DES ETAPES POUR TRAVAILLER EN EQUIPE AVEC GIT ET LARAVEL
+    * RESUME DES ETAPES POUR TRAVAILLER EN EQUIPE AVEC GIT ET LARAVEL
 
-* UN LEAD DEV QUI CREE LE REPOSITORY GITHUB
-* ENSUITE LE LEAD DEV CLONE LE REPOSITORY SUR SON ORIDNATEUR
-* ENSUITE LE LEAD DEV INSTALLE LARAVEL DANS LE DOSSIER CLONE
-* ET ENFIN LE LEAD DEV PUSH SUR LE REPOSITORY SON CODE
-* WARNING: 
-*       LARAVEL A DES FICHIERS .gitignore 
-        QUI ENLEVE CERTAINS DOSSIERS ET FICHIERS DU REPOSITORY 
-* => LE REPOSITORY GITHUB A UN CODE INCOMPLET !!!
-* LES AUTRES DEV DE L'EQUIPE VONT FAIRE UN PULL POUR RECUPERER LE CODE DU REPOSITORY
-* => MAIS ILS N'AURONT PAS TOUT LE CODE
-*   (A CAUSE DU .gitignore...)
-* POUR COMPLETER CHAQUE INSTALLATION, CHAQUE DEV DOIT LANCER UNE COMMANDE DANS LE DOSSIER DE LARAVEL
+    * UN LEAD DEV QUI CREE LE REPOSITORY GITHUB
+    * ENSUITE LE LEAD DEV CLONE LE REPOSITORY SUR SON ORIDNATEUR
+    * ENSUITE LE LEAD DEV INSTALLE LARAVEL DANS LE DOSSIER CLONE
+    * ET ENFIN LE LEAD DEV PUSH SUR LE REPOSITORY SON CODE
+    * WARNING: 
+    *       LARAVEL A DES FICHIERS .gitignore 
+            QUI ENLEVE CERTAINS DOSSIERS ET FICHIERS DU REPOSITORY 
+    * => LE REPOSITORY GITHUB A UN CODE INCOMPLET !!!
+    * LES AUTRES DEV DE L'EQUIPE VONT FAIRE UN PULL POUR RECUPERER LE CODE DU REPOSITORY
+    * => MAIS ILS N'AURONT PAS TOUT LE CODE
+    *   (A CAUSE DU .gitignore...)
+    * POUR COMPLETER CHAQUE INSTALLATION, CHAQUE DEV DOIT LANCER UNE COMMANDE DANS LE DOSSIER DE LARAVEL
 
-* SUR WINDOWS
+    * SUR WINDOWS
 
-    composer install
+        composer install
 
-* SUR MAC
+    * SUR MAC
 
-    php composer.par install
+        php composer.par install
 
-* NORMALEMENT, UNE FOIS LA COMMANDE TERMINEE
-* ON DOIT RETROUVER LES DOSSIERS ET FICHIERS MANQUANTS
+    * NORMALEMENT, UNE FOIS LA COMMANDE TERMINEE
+    * ON DOIT RETROUVER LES DOSSIERS ET FICHIERS MANQUANTS
 
-    vendor/
-    etc...
+        vendor/
+        etc...
 
-EXPLICATION: LE DOSSIER vendor/ CONTIENT LE CODE POUR LES LIBRAIRIES PHP
-=> VOUS N'AVEZ PAS A LES MODIFIER
-=> IL N'Y A PAS BESOIN DE POLLUER LE REPOSITORY github AVEC CES CODES
+    EXPLICATION: LE DOSSIER vendor/ CONTIENT LE CODE POUR LES LIBRAIRIES PHP
+    => VOUS N'AVEZ PAS A LES MODIFIER
+    => IL N'Y A PAS BESOIN DE POLLUER LE REPOSITORY github AVEC CES CODES
 
 
 
 ## STRATEGIES DE TRAVAIL EN EQUIPE
 
-POUR LES DEBUTANTS, IL EST CONSEILLE DE TRAVAILLER D'ABORD DANS SON COIN POUR NE PAS PROPAGER LES BUGS A TOUT LE MONDE
+    POUR LES DEBUTANTS, IL EST CONSEILLE DE TRAVAILLER D'ABORD DANS SON COIN POUR NE PAS PROPAGER LES BUGS A TOUT LE MONDE
 
-=> POUR LES MAQUETTES, IL EST PREFERABLE DE GARDER TOUT LE CODE HTML, CSS ET JS POUR CHAQUE DEV
-=> ET SEULEMENT QUAND LE CODE EST STABLE (CA MARCHE BIEN...)
-=> ALORS ON VA MERGER LES CODES DANS DES FICHIERS COMMUNS
+    => POUR LES MAQUETTES, IL EST PREFERABLE DE GARDER TOUT LE CODE HTML, CSS ET JS POUR CHAQUE DEV
+    => ET SEULEMENT QUAND LE CODE EST STABLE (CA MARCHE BIEN...)
+    => ALORS ON VA MERGER LES CODES DANS DES FICHIERS COMMUNS
 
-=> PEUT-ETRE QU'IL FAUT CREER DES FICHIERS POUR CHAQUE DEV
+    => PEUT-ETRE QU'IL FAUT CREER DES FICHIERS POUR CHAQUE DEV
 
 
-POUR GIT, LE PLUS SIMPLE EST DE TRAVAILLER SANS BRANCHE DIRECTEMENT SUR LE MASTER
+    POUR GIT, LE PLUS SIMPLE EST DE TRAVAILLER SANS BRANCHE DIRECTEMENT SUR LE MASTER
 
-* BONS COTES: ON FAIT JUSTE DES PULL ET DES PUSH
-* MAUVAIS COTES: LES ERREURS SE PROPAGENT TRES VITE A TOUT LE MONDE
+    * BONS COTES: ON FAIT JUSTE DES PULL ET DES PUSH
+    * MAUVAIS COTES: LES ERREURS SE PROPAGENT TRES VITE A TOUT LE MONDE
 
-* IL FAUT DE LA RIGUEUR POUR CHAQUE DEV POUR VERIFIER QUE CA MARCHE AVANT DE PUSHER
+    * IL FAUT DE LA RIGUEUR POUR CHAQUE DEV POUR VERIFIER QUE CA MARCHE AVANT DE PUSHER
 
-SI VOUS N'ARRIVEZ PAS A TRAVAILLER EN EQUIPE
-* => IL FAUT FAIRE DES BRANCHES
-* BONS COTES: CHACUN TRAVAILLE INDEPENDAMMENT 
-* MAUVAIS COTES: CHACUN ACCUMULE DU CODE
-* => BIG BANG TESTING
-* => ON MERGE PLEIN DE CODES EN MEME TEMPS
-* => SOUVENT CA SE PASSE MAL...
-* => DE LONGUES NUITS BLANCHES A PREVOIR AVEC BEAUCOUP DE CAFE
+    SI VOUS N'ARRIVEZ PAS A TRAVAILLER EN EQUIPE
+    * => IL FAUT FAIRE DES BRANCHES
+    * BONS COTES: CHACUN TRAVAILLE INDEPENDAMMENT 
+    * MAUVAIS COTES: CHACUN ACCUMULE DU CODE
+    * => BIG BANG TESTING
+    * => ON MERGE PLEIN DE CODES EN MEME TEMPS
+    * => SOUVENT CA SE PASSE MAL...
+    * => DE LONGUES NUITS BLANCHES A PREVOIR AVEC BEAUCOUP DE CAFE
 
 
 ## SQL: JOINTURES ET RELATIONS ENTRE TABLES
 
-* READ
-* SELECT...
+    * READ
+    * SELECT...
 
-EN SQL QUAND ON LANCE UNE REQUETE SELECT
-=> LE RESULTAT EST UNE TABLE AVEC DES LIGNES ET DES COLONNES
-=> CETTE TABLE DE RESULTATS EST FABRIQUEE PAR SQL A PARTIR DES TABLES DE NOTRE BDD
+    EN SQL QUAND ON LANCE UNE REQUETE SELECT
+    => LE RESULTAT EST UNE TABLE AVEC DES LIGNES ET DES COLONNES
+    => CETTE TABLE DE RESULTATS EST FABRIQUEE PAR SQL A PARTIR DES TABLES DE NOTRE BDD
 
-IL Y A DES SCENARIOS OU SUR UNE PAGE WEB, ON A BESOIN D'AFFICHER DES INFORMATIONS STOCKEES DANS DIFFERENTES TABLES SQL
+    IL Y A DES SCENARIOS OU SUR UNE PAGE WEB, ON A BESOIN D'AFFICHER DES INFORMATIONS STOCKEES DANS DIFFERENTES TABLES SQL
 
-EXEMPLE:
-LA PAGE D'UNE ANNONCE AFFICHE LES INFOS DE L'ANNONCE
-    => TABLE SQL annonce
-MAIS AUSSI LES INFOS SUR L'AUTEUR DE L'ANNONCE
-    => TABLE SQL membre
+    EXEMPLE:
+    LA PAGE D'UNE ANNONCE AFFICHE LES INFOS DE L'ANNONCE
+        => TABLE SQL annonce
+    MAIS AUSSI LES INFOS SUR L'AUTEUR DE L'ANNONCE
+        => TABLE SQL membre
 
-* OPTION1: 
-* JE FAIS 2 REQUETES SEPAREES 
-* POUR RECUPERER D'ABORD LES INFOS DE L'ANNONCE
-* ET ENSUITE DANS UNE 2E REQUETE, JE RECUPERE LES INFOS DU MEMBRE
-
-
-* OPTION2:
-* JE FAIS UNE SEULE REQUETE SQL
-* QUI RECUPERE LES INFOS DES 2 TABLES SQL
-* => JOINTURES
-
-* UNE JOINTURE PERMET DE COMBINER LES INFOS DE PLUSIEURS TABLES SQL
-
-https://sql.sh/cours/jointures
+    * OPTION1: 
+    * JE FAIS 2 REQUETES SEPAREES 
+    * POUR RECUPERER D'ABORD LES INFOS DE L'ANNONCE
+    * ET ENSUITE DANS UNE 2E REQUETE, JE RECUPERE LES INFOS DU MEMBRE
 
 
-* INNER JOIN
+    * OPTION2:
+    * JE FAIS UNE SEULE REQUETE SQL
+    * QUI RECUPERE LES INFOS DES 2 TABLES SQL
+    * => JOINTURES
 
-SELECT *
-FROM A
-INNER JOIN B ON A.key = B.key
+    * UNE JOINTURE PERMET DE COMBINER LES INFOS DE PLUSIEURS TABLES SQL
 
-SELECT *
-FROM annonce
-INNER JOIN membre 
-ON annonce.auteur = membre.username
-
-* LEFT JOIN
-
-SELECT *
-FROM A
-LEFT JOIN B ON A.key = B.key
-
-SELECT *
-FROM annonce
-LEFT JOIN membre 
-ON annonce.auteur = membre.username
-
-* LEFT JOIN SANS INTERSECTION
-
-SELECT *
-FROM A
-LEFT JOIN B ON A.key = B.key
-WHERE B.key IS NULL
+    https://sql.sh/cours/jointures
 
 
-SELECT *
-FROM annonce
-LEFT JOIN membre
-ON annonce.auteur = membre.username
-WHERE membre.username IS NULL
+    * INNER JOIN
+
+    SELECT *
+    FROM A
+    INNER JOIN B ON A.key = B.key
+
+    SELECT *
+    FROM annonce
+    INNER JOIN membre 
+    ON annonce.auteur = membre.username
+
+    * LEFT JOIN
+
+    SELECT *
+    FROM A
+    LEFT JOIN B ON A.key = B.key
+
+    SELECT *
+    FROM annonce
+    LEFT JOIN membre 
+    ON annonce.auteur = membre.username
+
+    * LEFT JOIN SANS INTERSECTION
+
+    SELECT *
+    FROM A
+    LEFT JOIN B ON A.key = B.key
+    WHERE B.key IS NULL
 
 
-* RIGHT JOIN
-
-SELECT *
-FROM A
-RIGHT JOIN B ON A.key = B.key
-
-SELECT *
-FROM annonce
-RIGHT JOIN membre
-ON annonce.auteur = membre.username
-
-* RIGHT JOIN SANS INTERSECTION
-
-* SELECTIONNER LES 
-SELECT *
-FROM A
-RIGHT JOIN B ON A.key = B.key
-WHERE B.key IS NULL
+    SELECT *
+    FROM annonce
+    LEFT JOIN membre
+    ON annonce.auteur = membre.username
+    WHERE membre.username IS NULL
 
 
-* ATTENTION AU SENS DE LA REQUETE
-* => SI JE VEUX LES MEMBRES QUI N'ONT PAS D'ANNONCE
+    * RIGHT JOIN
 
-SELECT *
-FROM annonce
-RIGHT JOIN membre 
-ON annonce.auteur = membre.username
-WHERE annonce.auteur IS NULL
+    SELECT *
+    FROM A
+    RIGHT JOIN B ON A.key = B.key
 
-* FULL JOIN
+    SELECT *
+    FROM annonce
+    RIGHT JOIN membre
+    ON annonce.auteur = membre.username
 
-SELECT *
-FROM A
-FULL JOIN B ON A.key = B.key
+    * RIGHT JOIN SANS INTERSECTION
 
-SELECT *
-FROM annonce
-FULL JOIN membre
-ON annonce.auteur = membre.username
+    * SELECTIONNER LES 
+    SELECT *
+    FROM A
+    RIGHT JOIN B ON A.key = B.key
+    WHERE B.key IS NULL
 
 
-* FULL JOIN SANS INTERSECTION
+    * ATTENTION AU SENS DE LA REQUETE
+    * => SI JE VEUX LES MEMBRES QUI N'ONT PAS D'ANNONCE
 
-SELECT *
-FROM A
-FULL JOIN B ON A.key = B.key
-WHERE A.key IS NULL
-OR B.key IS NULL
+    SELECT *
+    FROM annonce
+    RIGHT JOIN membre 
+    ON annonce.auteur = membre.username
+    WHERE annonce.auteur IS NULL
 
-SELECT *
-FROM annonce
-FULL JOIN membre
-ON annonce.auteur = membre.username
-WHERE annonce.auteur IS NULL
-OR membre.username IS NULL
+    * FULL JOIN
+
+    SELECT *
+    FROM A
+    FULL JOIN B ON A.key = B.key
+
+    SELECT *
+    FROM annonce
+    FULL JOIN membre
+    ON annonce.auteur = membre.username
+
+
+    * FULL JOIN SANS INTERSECTION
+
+    SELECT *
+    FROM A
+    FULL JOIN B ON A.key = B.key
+    WHERE A.key IS NULL
+    OR B.key IS NULL
+
+    SELECT *
+    FROM annonce
+    FULL JOIN membre
+    ON annonce.auteur = membre.username
+    WHERE annonce.auteur IS NULL
+    OR membre.username IS NULL
 
 
 
 ## CLE ETRANGERE ET RELATIONS ENTRE TABLES
 
-MODELISATION CONCEPTUEL DES TABLES SQL
+    MODELISATION CONCEPTUEL DES TABLES SQL
 
-annonce
-membre
-newsletter
-contact
+    annonce
+    membre
+    newsletter
+    contact
 
-* ENSUITE IL FAUT SE POSER LA QUESTION DES RELATIONS ENTRE LES TABLES
+    * ENSUITE IL FAUT SE POSER LA QUESTION DES RELATIONS ENTRE LES TABLES
 
-annonce ET membre SONT EN RELATION
-* UNE ANNONCE EST PUBLIEE PAR UN MEMBRE
-* UN MEMBRE PEUT PUBLIER PLUSIEURS ANNONCES
+    annonce ET membre SONT EN RELATION
+    * UNE ANNONCE EST PUBLIEE PAR UN MEMBRE
+    * UN MEMBRE PEUT PUBLIER PLUSIEURS ANNONCES
 
-annonce ET newsletter ? NON
-annonce ET contact ? NON
+    annonce ET newsletter ? NON
+    annonce ET contact ? NON
 
-* AVEC SQL, ON A CES 3 DIFFERENTES RELATIONS POSSIBLES
-ONE TO ONE  
-=>  POUR UNE LIGNE DE LA TABLE A 
-    JE PEUX ASSOCIER UNE LIGNE DE LA TABLE B
+    * AVEC SQL, ON A CES 3 DIFFERENTES RELATIONS POSSIBLES
+    ONE TO ONE  
+    =>  POUR UNE LIGNE DE LA TABLE A 
+        JE PEUX ASSOCIER UNE LIGNE DE LA TABLE B
 
-ONE TO MANY
-=> POUR UNE LIGNE DE LA TABLE A
-    JE PEUX ASSOCIER PLUSIEURS LIGNES DE LA TABLE B
-=> POUR UNE LIGNE DE LA TABLE B
-    JE PEUX ASSOCIER UNE LIGNE DE LA TABLE A
+    ONE TO MANY
+    => POUR UNE LIGNE DE LA TABLE A
+        JE PEUX ASSOCIER PLUSIEURS LIGNES DE LA TABLE B
+    => POUR UNE LIGNE DE LA TABLE B
+        JE PEUX ASSOCIER UNE LIGNE DE LA TABLE A
 
-MANY TO MANY
-=> POUR UNE LIGNE DE LA TABLE A
-    JE PEUX ASSOCIER PLUSIEURS LIGNES DE LA TABLE B
-=> POUR UNE LIGNE DE LA TABLE B
-    JE PEUX ASSOCIER PLUSIEURS LIGNES DE LA TABLE A
+    MANY TO MANY
+    => POUR UNE LIGNE DE LA TABLE A
+        JE PEUX ASSOCIER PLUSIEURS LIGNES DE LA TABLE B
+    => POUR UNE LIGNE DE LA TABLE B
+        JE PEUX ASSOCIER PLUSIEURS LIGNES DE LA TABLE A
 
-EXEMPLE: ONE TO ONE
-TABLE A annonce
-            id          => CLE PRIMAIRE
-            titre
-            description
-            photo
-            prix
+    EXEMPLE: ONE TO ONE
+    TABLE A annonce
+                id          => CLE PRIMAIRE
+                titre
+                description
+                photo
+                prix
 
-TABLE B annonce_voiture
-            id
-            kilometrage
-            moteur
-            annonce_id      
-            => JE RAJOUTE UNE CLE ETRANGERE VERS LA TABLE annonce
-                    (FOREIGN KEY)
+    TABLE B annonce_voiture
+                id
+                kilometrage
+                moteur
+                annonce_id      
+                => JE RAJOUTE UNE CLE ETRANGERE VERS LA TABLE annonce
+                        (FOREIGN KEY)
 
-POUR UNE LIGNE DE MA TABLE A, 
-JE PEUX AVOIR DES INFORMATIONS COMPLEMENTAIRES DANS LA TABLE B
-
-
-EXEMPLE: ONE TO MANY
-TABLE A annonce
-            id          => CLE PRIMAIRE
-            titre
-            photo
-            description
-            membre_id   => CLE ETRANGERE VERS LA TABLE membre
-TABLE B membre
-            id          => CLE PRIMAIRE
-            username
-            email
-            annonce_id  => CLE ETRANGERE VERS LA TABLE annonce
-            => ATTENTION: NE CONVIENT PAS CAR CELA VOUDAIT DIRE
-                QU'UN MEMBRE N'AURAIT QU'UNE SEULE ANNONCE
+    POUR UNE LIGNE DE MA TABLE A, 
+    JE PEUX AVOIR DES INFORMATIONS COMPLEMENTAIRES DANS LA TABLE B
 
 
-UNE ANNONCE EST PUBLIEE PAR UN SEUL MEMBRE
-MAIS UN MEMBRE PEUT PUBLIER PLUSIEURS ANNONCES
+    EXEMPLE: ONE TO MANY
+    TABLE A annonce
+                id          => CLE PRIMAIRE
+                titre
+                photo
+                description
+                membre_id   => CLE ETRANGERE VERS LA TABLE membre
+    TABLE B membre
+                id          => CLE PRIMAIRE
+                username
+                email
+                annonce_id  => CLE ETRANGERE VERS LA TABLE annonce
+                => ATTENTION: NE CONVIENT PAS CAR CELA VOUDAIT DIRE
+                    QU'UN MEMBRE N'AURAIT QU'UNE SEULE ANNONCE
 
-EXEMPLE: MANY TO MANY
-TABLE A recette
-            id
-            titre
-            photo
-TABLE B ingredient
-            id
-            nom
-            description
 
-ON DOIT CREER UNE TABLE C DE RELATION
-    recette_ingredient
-            id
-            recette_id          => CLE ETRANGERE
-            ingredient_id       => CLE ETRANGERE
+    UNE ANNONCE EST PUBLIEE PAR UN SEUL MEMBRE
+    MAIS UN MEMBRE PEUT PUBLIER PLUSIEURS ANNONCES
 
-UNE RECETTE UTILISE PLUSIEURS INGREDIENTS
-UN INGREDIENT PEUT ETRE UTILISE DANS PLUSIEURS RECETTES
+    EXEMPLE: MANY TO MANY
+    TABLE A recette
+                id
+                titre
+                photo
+    TABLE B ingredient
+                id
+                nom
+                description
 
-* LE PIRE POUR LE DEV EST LE MANY TO MANY
-    TABLE RECETTE
-id      titre 
-1       crepe
-2       cookies
+    ON DOIT CREER UNE TABLE C DE RELATION
+        recette_ingredient
+                id
+                recette_id          => CLE ETRANGERE
+                ingredient_id       => CLE ETRANGERE
 
-    TABLE INGREDIENT
-id      nom
-1       lait
-2       oeuf    
-3       farine
-4       sel
-5       sucre
-6       beurre
-7       chocolat
-8       levure
-9       beurre d'amande
-10      noisettes
+    UNE RECETTE UTILISE PLUSIEURS INGREDIENTS
+    UN INGREDIENT PEUT ETRE UTILISE DANS PLUSIEURS RECETTES
 
-    TABLE recette_ingredient
-id      recette_id      ingredient_id
-1       1               1
-2       1               2
-3       1               3
-4       1               4
-5       1               5
-6       1               6
-7       2               2
-8       2               3
-9       2               5
-10      2               7
-11      2               8
-12      2               9
-13      2               10
+    * LE PIRE POUR LE DEV EST LE MANY TO MANY
+        TABLE RECETTE
+    id      titre 
+    1       crepe
+    2       cookies
 
-SI JE VEUX RECUPERER LES INGREDIENT DE LA RECETTE DES CREPES
-=> IL FAUT FAIRE UNE PREMIERE JOINTURE 
-        ENTRE LA TABLE recette 
-        ET LA TABLE recette_ingredient
-    ET AUSSI UNE DEUXIEME JOINTURE
-        ENTRE LA TABLE recette_ingredient
-        ET LA TABLE ingredient
+        TABLE INGREDIENT
+    id      nom
+    1       lait
+    2       oeuf    
+    3       farine
+    4       sel
+    5       sucre
+    6       beurre
+    7       chocolat
+    8       levure
+    9       beurre d'amande
+    10      noisettes
 
-POURQUOI C'EST LE PIRE:
-* ON DOIT RAJOUTER UNE TABLE INTERMEDIAIRE
-* ET ON DOIT FAIRE DES REQUETES AVEC 2 JOINTURES
+        TABLE recette_ingredient
+    id      recette_id      ingredient_id
+    1       1               1
+    2       1               2
+    3       1               3
+    4       1               4
+    5       1               5
+    6       1               6
+    7       2               2
+    8       2               3
+    9       2               5
+    10      2               7
+    11      2               8
+    12      2               9
+    13      2               10
 
-SELECT *
-FROM recette
-INNER JOIN recette_ingredient
-ON recette.id = recette_ingredient.recette_id
-INNER JOIN ingredient
-ON recette_ingredient.ingredient_id = ingredient.id
+    SI JE VEUX RECUPERER LES INGREDIENT DE LA RECETTE DES CREPES
+    => IL FAUT FAIRE UNE PREMIERE JOINTURE 
+            ENTRE LA TABLE recette 
+            ET LA TABLE recette_ingredient
+        ET AUSSI UNE DEUXIEME JOINTURE
+            ENTRE LA TABLE recette_ingredient
+            ET LA TABLE ingredient
+
+    POURQUOI C'EST LE PIRE:
+    * ON DOIT RAJOUTER UNE TABLE INTERMEDIAIRE
+    * ET ON DOIT FAIRE DES REQUETES AVEC 2 JOINTURES
+
+    SELECT *
+    FROM recette
+    INNER JOIN recette_ingredient
+    ON recette.id = recette_ingredient.recette_id
+    INNER JOIN ingredient
+    ON recette_ingredient.ingredient_id = ingredient.id
 
 
