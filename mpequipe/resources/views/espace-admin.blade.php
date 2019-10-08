@@ -27,9 +27,9 @@
 // => ET GARDER LES {{ }} POUR VUEJS
 $coucou = "le texte à la place de coucou";
 ?> 
-<h3><?php echo $coucou ?></h3>   
-<h3>{{ $coucou }}</h3>
-<h3>@{{ coucou }}</h3>
+<h3>EN PHP: <?php echo $coucou ?></h3>   
+<h3>AVEC BLADE/LARAVEL: {{ $coucou }}</h3>
+<h3>AVEC VUEJS: @{{ coucou }}</h3>
 
         </main>  
 
