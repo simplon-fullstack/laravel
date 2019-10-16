@@ -23,6 +23,17 @@
         <section>
             <h3>MA SECTION ACCUEIL</h3>
         </section>
+
+        <section>
+            <h3>FORMULAIRE DE NEWSLETTER</h3>
+            <form action="newsletters/store" method="POST">
+                <input type="text" name="nom">
+                <input type="email" name="email">
+                <button type="submit">INSCRIPTION</button>
+                <!-- VA CREER UN CHAMP INPUT HIDDEN POUR LARAVEL (SECURITE) -->
+                @csrf
+            </form>
+        </section>
     </main>
     <footer>
     <nav>

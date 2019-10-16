@@ -40,3 +40,11 @@ Route::view('/', 'accueil');
 
 Route::view('/espace-membre', 'espace-membre');
 Route::view('/espace-admin', 'espace-admin');
+
+// https://laravel.com/docs/6.x/controllers#single-action-controllers
+// any => GET ou POST
+// ON ASSOCIE L'URL /newsletters/store
+// A LA CLASSE NewsletterController 
+// ET AVEC LA METHODE store 
+Route::any('/newsletters/store', 'NewsletterController@store');
+

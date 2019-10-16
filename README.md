@@ -543,3 +543,51 @@
     ON recette_ingredient.ingredient_id = ingredient.id
 
 
+
+## LARAVEL ET LA BASE DE DONNEES
+
+https://laravel.com/docs/6.x
+
+https://laravel.com/docs/6.x/database
+
+MySQL 5.6+
+
+
+DANS LARAVEL, LA CONNEXION A LA BDD SE FAIT A TRAVERS LE FICHIER 
+config/databases.php
+MAIS CE FICHIER UTILISE LES VARIABLES QUI SONT DANS
+.env
+
+=> IL FAUT MODIFIER LES VALEURS DANS .env
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=mpequipe     => NOM DE LA DATABASE MYSQL
+DB_USERNAME=root         => NOM DU USER SQL
+DB_PASSWORD=             => ATTENTION, CA PEUT CHANGER SUIVANT PC/MAC
+
+## POUR CREER LA DATABASE ET LES TABLES
+
+
+CORRIGER UN PROBLEME 
+SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was 
+too long; max key length is 767 bytes (SQL: alter table `users` add unique `users_email_unique`(`email`))
+
+
+https://laravel-news.com/laravel-5-4-key-too-long-error
+
+
+## CREER UNE NOUVELLE TABLE SQL
+
+SI ON VEUT CREER LA TABLE SQL contacts
+JE LANCE LA LIGNE DE COMMANDE
+php artisan make:Model Contact -mcr  
+
+=> database/migrations/2019_10_16_094902_create_contacts_table.php
+
+ DANS CE FICHIER PHP, JE VAIS ECRIRE LE CODE PHP
+ POUR AJOUTER MES COLONNES DANS LA TABLE SQL
+
+ https://laravel.com/docs/6.x/migrations#creating-columns
+ 
