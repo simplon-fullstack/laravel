@@ -18,6 +18,9 @@
             </nav>
         </header>
         <main>
+
+<section>
+
 <?php
 // DANS LARAVEL, BLADE EST AUSSI UN MOTEUR DE TEMPLATE COTE SERVEUR
 // ET BLADE UTILISE LES {{ }}
@@ -30,7 +33,27 @@ $coucou = "le texte à la place de coucou";
 <h3>EN PHP: <?php echo $coucou ?></h3>   
 <h3>AVEC BLADE/LARAVEL: {{ $coucou }}</h3>
 <h3>AVEC VUEJS: @{{ coucou }}</h3>
+</section>
 
+<section>
+    <h3>CRUD SUR LA TABLE SQL annonces</h3>
+    <h3>CREATE SUR LA TABLE SQL annonces</h3>
+    <!-- CONVENTION LARAVEL POUR LE CREATE action="annonce/store" -->
+    <form method="POST" action="annonce/store">
+        <input type="text" name="titre" required placeholder="entrez votre titre">
+        <textarea name="contenu" required placeholder="entrez votre contenu"></textarea>
+        <input type="text" name="photo" required placeholder="entrez votre URL DE photo">
+        <input type="text" name="adresse" required placeholder="entrez votre adresse">
+        <input type="text" name="categorie" required placeholder="entrez votre categorie">
+        <input type="number" name="prix" required placeholder="entrez votre prix">
+        <button type="submit">PUBLIER UNE ANNONCE</button>
+        <!-- RACCOURCI BLADE POUR AJOUTER UN CHAMP HIDDEN -->
+        @csrf
+    </form>
+
+    <h3>READ SUR LA TABLE SQL annonces</h3>
+    <h3>DANS CHAQUE ANNONCE ON AURA UN UPDATE ET UN DELETE</h3>
+</section>
         </main>  
 
     </div>

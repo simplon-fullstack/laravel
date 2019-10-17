@@ -9,4 +9,5 @@ class Newsletter extends Model
     // PROPRIETE D'OBJET
     protected $fillable = [ 'nom', 'email' ];
 
+    // METHODES
 }

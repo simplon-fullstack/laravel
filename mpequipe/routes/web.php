@@ -48,3 +48,10 @@ Route::view('/espace-admin', 'espace-admin');
 // ET AVEC LA METHODE store 
 Route::any('/newsletters/store', 'NewsletterController@store');
 
+// POUR CREER LA ROUTE QUI VA GERER LE CRUS SUR LES ANNONCES
+// CREATE
+// any => ON PEUT UTILISER GET OU POST
+// /annonce/store  => URL QUE LE NAVIGATEUR VA UTILISER
+// AnnonceController => classe qui contient les codes PHP POUR LE CRUD SUR LA TABLE SQL annonces
+// store        => LA METHODE DANS LA CLASSE AnnonceController QUE LARAVEL VA ACTIVER
+Route::any('/annonce/store', 'AnnonceController@store');

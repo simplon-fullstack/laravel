@@ -546,48 +546,250 @@
 
 ## LARAVEL ET LA BASE DE DONNEES
 
-https://laravel.com/docs/6.x
+    https://laravel.com/docs/6.x
 
-https://laravel.com/docs/6.x/database
+    https://laravel.com/docs/6.x/database
 
-MySQL 5.6+
+    MySQL 5.6+
 
 
-DANS LARAVEL, LA CONNEXION A LA BDD SE FAIT A TRAVERS LE FICHIER 
-config/databases.php
-MAIS CE FICHIER UTILISE LES VARIABLES QUI SONT DANS
-.env
+    DANS LARAVEL, LA CONNEXION A LA BDD SE FAIT A TRAVERS LE FICHIER 
+    config/databases.php
+    MAIS CE FICHIER UTILISE LES VARIABLES QUI SONT DANS
+    .env
 
-=> IL FAUT MODIFIER LES VALEURS DANS .env
+    => IL FAUT MODIFIER LES VALEURS DANS .env
 
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=mpequipe     => NOM DE LA DATABASE MYSQL
-DB_USERNAME=root         => NOM DU USER SQL
-DB_PASSWORD=             => ATTENTION, CA PEUT CHANGER SUIVANT PC/MAC
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=mpequipe     => NOM DE LA DATABASE MYSQL
+    DB_USERNAME=root         => NOM DU USER SQL
+    DB_PASSWORD=             => ATTENTION, CA PEUT CHANGER SUIVANT PC/MAC
 
 ## POUR CREER LA DATABASE ET LES TABLES
 
 
-CORRIGER UN PROBLEME 
-SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was 
-too long; max key length is 767 bytes (SQL: alter table `users` add unique `users_email_unique`(`email`))
+    CORRIGER UN PROBLEME 
+    SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was 
+    too long; max key length is 767 bytes (SQL: alter table `users` add unique `users_email_unique`(`email`))
 
 
-https://laravel-news.com/laravel-5-4-key-too-long-error
+    https://laravel-news.com/laravel-5-4-key-too-long-error
 
 
 ## CREER UNE NOUVELLE TABLE SQL
 
-SI ON VEUT CREER LA TABLE SQL contacts
-JE LANCE LA LIGNE DE COMMANDE
-php artisan make:Model Contact -mcr  
+    SI ON VEUT CREER LA TABLE SQL contacts
+    JE LANCE LA LIGNE DE COMMANDE
+    php artisan make:Model Contact -mcr  
 
-=> database/migrations/2019_10_16_094902_create_contacts_table.php
+    => database/migrations/2019_10_16_094902_create_contacts_table.php
 
- DANS CE FICHIER PHP, JE VAIS ECRIRE LE CODE PHP
- POUR AJOUTER MES COLONNES DANS LA TABLE SQL
+    DANS CE FICHIER PHP, JE VAIS ECRIRE LE CODE PHP
+    POUR AJOUTER MES COLONNES DANS LA TABLE SQL
 
- https://laravel.com/docs/6.x/migrations#creating-columns
+    https://laravel.com/docs/6.x/migrations#creating-columns
  
+## VALIDATION DE FORMULAIRES
+
+    https://laravel.com/docs/6.x/validation#manually-creating-validators
+
+    COMMENT ON PEUT AJOUTER DE LA SECURITE 
+    POUR VERIFIER LES INFOS DES FORMULAIRES
+
+
+    ATTENTION: LA SECURITE DANS LE HTML N'EST PAS UNE VRAIE SECURITE
+    CAR LE CODE HTML ARRIVE DANS LES NAVIGATEURS DES VISITEURS
+    SUR LEURS ORDINATEURS
+    => ILS FONT CE QU'ILS VEULENT AVEC CE CODE
+    => OUTILS DE DEVELOPPEURS DANS LES NAVIGATEURS
+    => HACKING EST TROP FACILE
+
+    => LA VRAIE SECURITE DOIT SE FAIRE SUR LE SERVEUR
+    => CAR LE SERVEUR NOUS APPARTIENT
+    => ON GARDE LE CONTROLE SUR LE SERVEUR
+
+
+## EXEMPLE AVEC LARAVEL ET ANNONCES
+
+    * MODELISATION CONCEPTUELLE DES DONNEES (MCD)
+
+    DEFINIR LA TABLE SQL annonces
+        id          BIGINT          INDEX=PRIMARY   A_I (LARAVEL LE FAIT POUR NOUS)
+        titre       VARCHAR(191)
+        contenu     TEXT
+        photo       VARCHAR(191)
+        adresse     VARCHAR(191)
+        categorie   VARCHAR(191)
+
+    * AVANT, ON CREAIT LES TABLES SQL AVEC PHPMYADMIN
+    * AVEC LARAVEL, ON UTILISE UNE LIGNE DE COMMANDE
+
+    php artisan make:model Annonce -mcr
+
+    // php SERT A LANCER UN CODE PHP EN LIGNE DE COMMANDE
+    // artisan EST UN PROGRAMME PHP FOURNI PAR LARAVEL
+    // make:model EST L'INSTRUCTION QU'ON DONNE AU PROGRAMME artisan
+    // Annonce => La classe PHP QUE LARAVEL VA CREER POUR NOUS
+    // -mcr     => ON VEUT PRE-MACHER DU CODE POUR FAIRE UN CRUD
+                => LARAVEL VA PREPARER LE CODE POUR OBTENIR UNE TABLE SQL annonces
+
+
+    POUR LANCER LA LIGNE DE COMMANDE
+    ON VA OUVRIR UN TERMINAL DANS LE DOSSIER QUI CONTIENT LE CODE LARAVEL
+    => DANS MON CAS, C'EST LE DOSSIER mpequipe
+
+    php artisan make:model Annonce -mcr
+
+    SI TOUT SE PASSE BIEN (QUE DU VERT...)
+    LARAVEL A CREE DES NOUVEAXU FICHIERS
+
+    database/migrations/2019_10_17_095930_create_annonces_table.php
+
+    IL FAUT MODIFIER LE CODE DE CE FICHIER POUR AJOUTER NOS COLONNES
+
+
+    https://laravel.com/docs/6.x/migrations#creating-columns
+
+    // IL FAUT AJOUTER LE CODE PHP OBJET POUR AJOUTER NOS COLONNES
+
+## LANCER LA COMMANDE PHP POUR CREER LA TABLE SQL
+
+    DE NOUVEAU IL FAUT LANCER UNE LIGNE DE COMMANDE 
+    DANS MON DOSSIER mpequipe
+
+    php artisan migrate:refresh
+
+    => SI TOUT SE PASSE BIEN (PAS DE ROUGE OU DE COULEUR AGRESSIVE ;-p)
+    => VERIFIER QUE LA TABLE SQL annonces A BIEN ETE CREE DANS PHPMYADMIN
+
+    NOTE: ON POURRAIT CREER LES TABLES SQL AVEC PHPMYADMIN...
+
+
+
+## FORMULAIRE DE CREATE
+
+    AJOUTER LE CODE HTML POUR LE FORMULAIRE DE CREATE
+    ATTENTION: IL FAUT AJOUTER @csrf POUR AJOUTER UNE SECURITE DE LARAVEL
+    (CSRF => ATTAQUES DE HACKER Cross Site Request Forgery)
+
+
+        <!-- CONVENTION LARAVEL POUR LE CREATE action="annonce/store" -->
+        <form method="POST" action="annonce/store">
+            <input type="text" name="titre" required placeholder="entrez votre titre">
+            <textarea name="contenu" required placeholder="entrez votre contenu"></textarea>
+            <input type="text" name="photo" required placeholder="entrez votre URL DE photo">
+            <input type="text" name="adresse" required placeholder="entrez votre adresse">
+            <input type="text" name="categorie" required placeholder="entrez votre categorie">
+            <button type="submit">PUBLIER UNE ANNONCE</button>
+            <!-- RACCOURCI BLADE POUR AJOUTER UN CHAMP HIDDEN -->
+            @csrf
+        </form>
+
+
+    IL FAUT MAINTENANT CREER LA ROUTE annonce/store
+    DANS LE FICHIER routes/web.php IL FAUT AJOUTER LA NOUVELLE ROUTE
+
+
+    // POUR CREER LA ROUTE QUI VA GERER LE CRUS SUR LES ANNONCES
+    // CREATE
+    // any => ON PEUT UTILISER GET OU POST
+    // /annonce/store  => URL QUE LE NAVIGATEUR VA UTILISER
+    // AnnonceController => classe qui contient les codes PHP POUR LE CRUD SUR LA TABLE SQL annonces
+    // store        => LA METHODE DANS LA CLASSE AnnonceController QUE LARAVEL VA ACTIVER
+    Route::any('/annonce/store', 'AnnonceController@store');
+
+
+## AJOUTER LE CODE DE TRAITEMENT DANS LE CONTROLLER
+
+    DANS app/Http/Controllers/AnnonceController.php
+    ON VA AJOUTER LE CODE DE TRAITEMENT POUR LE FORMULAIRE DE CREATE
+
+    // NE PAS OUBLIER DE RAJOUTER CETTE LIGNE 
+    // POUR POUVOIR UTILISER LA VALIDATION
+    use Validator;
+
+    // ...
+
+        /**
+        * Store a newly created resource in storage.
+        *
+        * @param  \Illuminate\Http\Request  $request
+        * @return \Illuminate\Http\Response
+        */
+        public function store(Request $request)
+        {
+            // ICI ON DOIT TRAITER LE FORMULAIRE DE CREATE
+            // ...
+            // ON VA RENVOYER DU FORMAT JSON
+            // EN PHP, ON VA UTILISER UN TABLEAU ASSOCIATIF
+            $tabAssoJson = [];
+            $tabAssoJson["test"] = date("Y-m-d H:i:s");
+
+            // SECURITE: ICI ON DOIT VERIFIER QUE LES INFOS SONT CORRECTES
+            // ON DOIT RECUPERER LES INFOS ENVOYEES PAR LE NAVIGATEUR        
+            // ON VA STOCKER LES INFOS DANS LA TABLE SQL annonces
+            // https://laravel.com/docs/5.7/validation#manually-creating-validators
+            // https://laravel.com/docs/5.7/validation#available-validation-rules
+
+            $validator = Validator::make($request->all(), [
+                'titre'     => 'required|max:160',
+                'contenu'   => 'required',
+                'photo'     => 'required|max:160',
+                'adresse'   => 'required|max:160',
+                'categorie' => 'required|max:160',
+                'prix'      => 'required|numeric|min:0|max:2000000',
+            ]);
+
+            if ($validator->fails()) 
+            {
+                // CAS OU IL Y A DES ERREURS
+                $tabAssoJson["erreur"] = "IL Y A DES ERREURS";
+            }
+            else
+            {
+                // CAS OU TOUTES LES INFOS SONT CORRECTES
+                // ON PEUT LES STOCKER DANS LA TABLE SQL annonces
+                // https://laravel.com/docs/5.8/eloquent#mass-assignment
+                // ATTENTION: NE PAS OUBLIER LE PARAMETRAGE OBLIGATOIRE AVANT DE FAIRE CE CODE
+                // sinon erreur: Add [titre] to fillable property to allow mass assignment on [App\Annonce].
+                // IL FAUT AJOUTER DU CODE DANS
+                // app/Annonce.php
+                Annonce::create($request->only([
+                    "titre", "contenu", "photo", "adresse", "categorie", "prix"
+                ]));
+            }
+
+            return $tabAssoJson;
+            // NOTE: CE SERA LARAVEL QUI VA TRANSFORMER 
+            // LE TABLEAU ASSOCIATIF EN JSON
+        }
+
+
+
+    POUR POUVOIR UTILISER Annonce::create
+    IL FAUT AJOUTER DU CODE DANS 
+    app/Annonce.php
+    * AJOUTER UNE PROPRIETE D'OBJET AVEC LE NOM $fillable
+
+
+    <?php
+
+    namespace App;
+
+    use Illuminate\Database\Eloquent\Model;
+
+    class Annonce extends Model
+    {
+        // PROPRIETES D'OBJET
+        protected $fillable = [
+            "titre", "contenu", "photo", "adresse", "categorie", "prix"
+        ];
+
+    }
+
+
+
+
+

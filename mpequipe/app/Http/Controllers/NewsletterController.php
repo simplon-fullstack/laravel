@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Newsletter;
 use Illuminate\Http\Request;
 
+// NE PAS OUBLIER DE RAJOUTER CETTE LIGNE 
+// POUR POUVOIR UTILISER LA VALIDATION
+use Validator;
+
 class NewsletterController extends Controller
 {
     /**
@@ -47,25 +51,52 @@ class NewsletterController extends Controller
         // AVEC LES INFOS A RENVOYER AU NAVIGATEUR
         $tabAssoJson["infoNavigateur"] = date("Y-m-d H:i:s");
 
+
         // SI JE VEUX TRAITER LE FORMULAIRE
-        // JE DOIS RECUPERER LES INFOS ENVOYEES PAR LE NAVIGATEUR
-        // nom
-        // email
-        $nom = $request->input("nom");
-        $email = $request->input("email");
+        // ON VEUT VERIFIER SI L'EMAIL A LA FORME D'UN EMAIL
+        // ET ON VEUT QUE L'EMAIL SOIT UNIQUE
+        // https://laravel.com/docs/5.7/validation#manually-creating-validators
+        // https://laravel.com/docs/5.7/validation#available-validation-rules
+        // LES CLES SONT LES ATTRIBUTS name DANS LE HTML
+        // <input name="email">
+        // <input name="nom">
+        // => ICI ON FAIT LES CONTROLES DE SECURITE
+        // => CONTROLLER DANS MVC
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|unique:newsletters|max:160',
+            'nom'   => 'required|max:160',
+        ]);
 
-        $tabAssoColonneValeur = [
-            "nom"   => $nom,
-            "email" => $email,
-        ];
+        if ($validator->fails()) 
+        {
+            // IL Y A DES ERREURS
+            $tabAssoJson["erreur"] = "IL Y A DES ERREURS";
+        }
+        else
+        {
+            // C'EST OK
+            // JE DOIS RECUPERER LES INFOS ENVOYEES PAR LE NAVIGATEUR
+            // nom
+            // email
+            $nom = $request->input("nom");
+            $email = $request->input("email");
 
-        // DEBUG
-        $tabAssoJson["debugForm"] = $tabAssoColonneValeur;
+            
+            $tabAssoColonneValeur = [
+                "nom"   => $nom,
+                "email" => $email,
+            ];
 
-        // JE VEUX INSERER UNE LIGNE DANS LA TABLE SQL newsletters
-        // IL FAUT AVOIR AJOUTE UNE PROPRIETE
-        // DANS LA CLASSE Newsletter.php
-        Newsletter::create($tabAssoColonneValeur);
+            // DEBUG
+            $tabAssoJson["debugForm"] = $tabAssoColonneValeur;
+
+            // JE VEUX INSERER UNE LIGNE DANS LA TABLE SQL newsletters
+            // IL FAUT AVOIR AJOUTE UNE PROPRIETE
+            // DANS LA CLASSE Newsletter.php
+            // LA METHODE create VIENT DE LA CLASSE PARENTE Model
+            Newsletter::create($tabAssoColonneValeur);
+        }
+
 
         // ON PEUT RENVOYER LE TABLEAU ASSOCIATIF
         // ET LARAVEL VA LE TRANSFORMER EN JSON => COOL

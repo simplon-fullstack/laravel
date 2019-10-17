@@ -27,8 +27,8 @@
         <section>
             <h3>FORMULAIRE DE NEWSLETTER</h3>
             <form action="newsletters/store" method="POST">
-                <input type="text" name="nom">
-                <input type="email" name="email">
+                <input type="text" name="nom" required>
+                <input type="email" name="email" required>
                 <button type="submit">INSCRIPTION</button>
                 <!-- VA CREER UN CHAMP INPUT HIDDEN POUR LARAVEL (SECURITE) -->
                 @csrf
