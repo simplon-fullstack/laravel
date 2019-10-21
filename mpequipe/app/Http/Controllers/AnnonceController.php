@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 // NE PAS OUBLIER DE RAJOUTER CETTE LIGNE 
 // POUR POUVOIR UTILISER LA VALIDATION
 use Validator;
+// NE PAS OUBLIER DE RAJOUTER CETTE LIGNE POUR UTILISATION Auth
+use Illuminate\Support\Facades\Auth;
 
 class AnnonceController extends Controller
 {
@@ -48,40 +50,61 @@ class AnnonceController extends Controller
         $tabAssoJson = [];
         $tabAssoJson["test"] = date("Y-m-d H:i:s");
 
-        // SECURITE: ICI ON DOIT VERIFIER QUE LES INFOS SONT CORRECTES
-        // ON DOIT RECUPERER LES INFOS ENVOYEES PAR LE NAVIGATEUR        
-        // ON VA STOCKER LES INFOS DANS LA TABLE SQL annonces
-        // https://laravel.com/docs/5.7/validation#manually-creating-validators
-        // https://laravel.com/docs/5.7/validation#available-validation-rules
+        // ON DOIT VERIFIER SI L'UTILISATEUR CONNECTE 
+        // A LE DROIT DE CREER DES ANNONCES
+        // https://laravel.com/docs/5.8/authentication#retrieving-the-authenticated-user
+        $utilisateurConnecte = Auth::user();
 
-        $validator = Validator::make($request->all(), [
-            'titre'     => 'required|max:160',
-            'contenu'   => 'required',
-            'photo'     => 'required|max:160',
-            'adresse'   => 'required|max:160',
-            'categorie' => 'required|max:160',
-            'prix'      => 'required|numeric|min:0|max:2000000',
-        ]);
-
-        if ($validator->fails()) 
+        if ($utilisateurConnecte != null)
         {
-            // CAS OU IL Y A DES ERREURS
-            $tabAssoJson["erreur"] = "IL Y A DES ERREURS";
+            // IL FAUDRA RAJOUTER UN TEST SUPPLEMENTAIRE SUR LE level
+            // level >= 10
+            
+            // debug
+            $tabAssoJson["utilisateurConnecte"] = $utilisateurConnecte;
+            
+
+            // SECURITE: ICI ON DOIT VERIFIER QUE LES INFOS SONT CORRECTES
+            // ON DOIT RECUPERER LES INFOS ENVOYEES PAR LE NAVIGATEUR        
+            // ON VA STOCKER LES INFOS DANS LA TABLE SQL annonces
+            // https://laravel.com/docs/5.7/validation#manually-creating-validators
+            // https://laravel.com/docs/5.7/validation#available-validation-rules
+
+            $validator = Validator::make($request->all(), [
+                'titre'     => 'required|max:160',
+                'contenu'   => 'required',
+                'photo'     => 'required|max:160',
+                'adresse'   => 'required|max:160',
+                'categorie' => 'required|max:160',
+                'prix'      => 'required|numeric|min:0|max:2000000',
+            ]);
+
+            if ($validator->fails()) 
+            {
+                // CAS OU IL Y A DES ERREURS
+                $tabAssoJson["erreur"] = "IL Y A DES ERREURS";
+            }
+            else
+            {
+                // CAS OU TOUTES LES INFOS SONT CORRECTES
+                // ON PEUT LES STOCKER DANS LA TABLE SQL annonces
+                // https://laravel.com/docs/5.8/eloquent#mass-assignment
+                // ATTENTION: NE PAS OUBLIER LE PARAMETRAGE OBLIGATOIRE AVANT DE FAIRE CE CODE
+                // sinon erreur: Add [titre] to fillable property to allow mass assignment on [App\Annonce].
+                // IL FAUT AJOUTER DU CODE DANS
+                // app/Annonce.php
+                Annonce::create($request->only([
+                    "titre", "contenu", "photo", "adresse", "categorie", "prix"
+                ]));
+            }
+
         }
         else
         {
-            // CAS OU TOUTES LES INFOS SONT CORRECTES
-            // ON PEUT LES STOCKER DANS LA TABLE SQL annonces
-            // https://laravel.com/docs/5.8/eloquent#mass-assignment
-            // ATTENTION: NE PAS OUBLIER LE PARAMETRAGE OBLIGATOIRE AVANT DE FAIRE CE CODE
-            // sinon erreur: Add [titre] to fillable property to allow mass assignment on [App\Annonce].
-            // IL FAUT AJOUTER DU CODE DANS
-            // app/Annonce.php
-            Annonce::create($request->only([
-                "titre", "contenu", "photo", "adresse", "categorie", "prix"
-            ]));
+            // ERREUR
+            // IL FAUT ETRE CONNECTE POUR PUBLIER UNE ANNONCE
+            $tabAssoJson["erreur"] = "IL FAUT ETRE CONNECTE POUR PUBLIER UNE ANNONCE";
         }
-
 
 
 

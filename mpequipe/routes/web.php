@@ -55,3 +55,16 @@ Route::any('/newsletters/store', 'NewsletterController@store');
 // AnnonceController => classe qui contient les codes PHP POUR LE CRUD SUR LA TABLE SQL annonces
 // store        => LA METHODE DANS LA CLASSE AnnonceController QUE LARAVEL VA ACTIVER
 Route::any('/annonce/store', 'AnnonceController@store');
+
+Auth::routes();
+// CETTE LIGNE DE CODE CREE PLUSIEURS URLS DE ROUTE
+// /register                => INSCRIPTION D'UN NOUVEL UTILISATEUR
+// /login                   => UN VISITEUR PEUT S'IDENTIFIER
+// /logout                  => UN MEMBRE PEUT SE DECONNECTER
+// /password/reset          => UN MEMBRE PEUT DEMANDER A RETROUVER SON MOT DE PASSE
+
+
+
+
+
+Route::get('/home', 'HomeController@index')->name('home');
