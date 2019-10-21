@@ -852,6 +852,11 @@
 
     => NORMALEMENT, ON LE FAIT DES LE DEPART A L'INSTALLATION DE LARAVEL
 
+    POUR VERIFIER, IL FAUT TESTER LES URLS DANS SON SITE
+    /home
+    /register
+    /login
+    /logout
 
 
 
