@@ -63,8 +63,11 @@ Auth::routes();
 // /logout                  => UN MEMBRE PEUT SE DECONNECTER
 // /password/reset          => UN MEMBRE PEUT DEMANDER A RETROUVER SON MOT DE PASSE
 
-
-
-
-
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+// ON VA AJOUTER LA PAGE /annonces 
+// QUI VA AFFICHER LA LISTE DES ANNONCES
+// ON VA UTILISER LE TEMPLATE 
+// /resources/views/annonces.blade.php
+Route::view('/annonces', 'annonces');
