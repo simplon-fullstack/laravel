@@ -917,6 +917,112 @@
 
     php artisan migrate:refresh
 
+## MODIFIER LE CODE PHP DE CREATION D'UN UTILISATEUR
+
+    MODIFIER LE FICHIER 
+    app/Http/Controllers/Auth/RegisterController.php
+    MODIFIER LE CODE DE LA METHODE create
+
+    protected function create(array $data)
+    {
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'level'     => 10,      // ON CONSIDERE QUE LE USER EST ACTIF TOUT DE SUITE
+        ]);
+    }
+
+# MODIFIER LE CODE DE CREATION D'UNE ANNONCE
+
+    MODIFIER LE FICHIER 
+    app/Http/Controllers/AnnonceController.php
+    MODIFIER LE CODE DE LA METHODE store
+    POUR TESTER LE level DU USER
+    ET ENSUITE AJOUTER LE user_id AVEC id DU USER CONNECTE
+
+
+    public function store(Request $request)
+    {
+        // ICI ON DOIT TRAITER LE FORMULAIRE DE CREATE
+        // ...
+        // ON VA RENVOYER DU FORMAT JSON
+        // EN PHP, ON VA UTILISER UN TABLEAU ASSOCIATIF
+        $tabAssoJson = [];
+        $tabAssoJson["test"] = date("Y-m-d H:i:s");
+
+        // ON DOIT VERIFIER SI L'UTILISATEUR CONNECTE 
+        // A LE DROIT DE CREER DES ANNONCES
+        // https://laravel.com/docs/5.8/authentication#retrieving-the-authenticated-user
+        $utilisateurConnecte = Auth::user();
+
+        if ($utilisateurConnecte != null && $utilisateurConnecte->level >= 10)
+        {
+            // IL FAUDRA RAJOUTER UN TEST SUPPLEMENTAIRE SUR LE level
+            // level >= 10
+            
+            // debug
+            $tabAssoJson["utilisateurConnecte"] = $utilisateurConnecte;
+            
+
+            // SECURITE: ICI ON DOIT VERIFIER QUE LES INFOS SONT CORRECTES
+            // ON DOIT RECUPERER LES INFOS ENVOYEES PAR LE NAVIGATEUR        
+            // ON VA STOCKER LES INFOS DANS LA TABLE SQL annonces
+            // https://laravel.com/docs/5.7/validation#manually-creating-validators
+            // https://laravel.com/docs/5.7/validation#available-validation-rules
+
+            $validator = Validator::make($request->all(), [
+                'titre'     => 'required|max:160',
+                'contenu'   => 'required',
+                'photo'     => 'required|max:160',
+                'adresse'   => 'required|max:160',
+                'categorie' => 'required|max:160',
+                'prix'      => 'required|numeric|min:0|max:2000000',
+            ]);
+
+            if ($validator->fails()) 
+            {
+                // CAS OU IL Y A DES ERREURS
+                $tabAssoJson["erreur"] = "IL Y A DES ERREURS";
+            }
+            else
+            {
+                // CAS OU TOUTES LES INFOS SONT CORRECTES
+                // ON PEUT LES STOCKER DANS LA TABLE SQL annonces
+                // https://laravel.com/docs/5.8/eloquent#mass-assignment
+                // ATTENTION: NE PAS OUBLIER LE PARAMETRAGE OBLIGATOIRE AVANT DE FAIRE CE CODE
+                // sinon erreur: Add [titre] to fillable property to allow mass assignment on [App\Annonce].
+                // IL FAUT AJOUTER DU CODE DANS
+                // app/Annonce.php
+                $tabInput = $request->only([
+                    "titre", "contenu", "photo", "adresse", "categorie", "prix"
+                ]);
+                // ON VA AJOUTER L'INFO DU user_id
+                $tabInput["user_id"] = $utilisateurConnecte->id;
+
+                Annonce::create($tabInput);
+            }
+
+        }
+        else
+        {
+            // ERREUR
+            // IL FAUT ETRE CONNECTE POUR PUBLIER UNE ANNONCE
+            $tabAssoJson["erreur"] = "IL FAUT ETRE CONNECTE POUR PUBLIER UNE ANNONCE";
+        }
+
+
+    ET NE PAS OUBLIER DE RAJOUTER user_id DANS App/Annonce.php
+
+    class Annonce extends Model
+    {
+        // PROPRIETES D'OBJET
+        protected $fillable = [
+            "titre", "contenu", "photo", "adresse", "categorie", "prix", "user_id",
+        ];
+
+    }
+
 
 
 
