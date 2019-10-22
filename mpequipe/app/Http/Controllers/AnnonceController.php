@@ -55,7 +55,7 @@ class AnnonceController extends Controller
         // https://laravel.com/docs/5.8/authentication#retrieving-the-authenticated-user
         $utilisateurConnecte = Auth::user();
 
-        if ($utilisateurConnecte != null)
+        if ($utilisateurConnecte != null && $utilisateurConnecte->level >= 10)
         {
             // IL FAUDRA RAJOUTER UN TEST SUPPLEMENTAIRE SUR LE level
             // level >= 10
@@ -93,9 +93,13 @@ class AnnonceController extends Controller
                 // sinon erreur: Add [titre] to fillable property to allow mass assignment on [App\Annonce].
                 // IL FAUT AJOUTER DU CODE DANS
                 // app/Annonce.php
-                Annonce::create($request->only([
+                $tabInput = $request->only([
                     "titre", "contenu", "photo", "adresse", "categorie", "prix"
-                ]));
+                ]);
+                // ON VA AJOUTER L'INFO DU user_id
+                $tabInput["user_id"] = $utilisateurConnecte->id;
+
+                Annonce::create($tabInput);
             }
 
         }

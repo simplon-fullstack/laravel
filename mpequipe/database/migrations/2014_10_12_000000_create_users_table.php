@@ -13,9 +13,13 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+
+        // https://laravel.com/docs/5.0/schema#adding-columns
+
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->integer('level');
+            $table->string('name')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

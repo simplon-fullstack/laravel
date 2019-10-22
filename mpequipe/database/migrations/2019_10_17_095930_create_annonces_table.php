@@ -39,7 +39,14 @@ class CreateAnnoncesTable
             $table->string('adresse');	
             $table->string('categorie');	
             $table->decimal('prix', 10, 2);
-            	
+
+            // https://laravel.com/docs/5.0/schema#foreign-keys
+            // ON AJOUTE UNE COLONNE DE CLE ETRANGERE 
+            // POUR LA RELATION ONE TO MANY	
+            // AVEC LA TABLE SQL users
+            $table->bigInteger('user_id')->unsigned();
+            // $table->foreign('user_id')->references('id')->on('users');
+
             $table->timestamps();       // LARAVEL VA AJOUTER 2 COLONNE created_at ET updated_at
         });
     }

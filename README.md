@@ -862,6 +862,60 @@
 
 COURS POUR LE MARDI
 
+## ON VA AJOUTER LA COLONNE level SUR LA TABLES users
+
+    DANS LE FICHIER database/migrations/....create_table_users.php
+    ON AJOUTE LA COLONNE level COMME integer
+
+        // https://laravel.com/docs/5.0/schema#adding-columns
+
+            $table->integer('level');
+
+
+## ON VA AJOUTER LA RELATION ONE TO MANY ENTRE users et annonces
+
+ONE TO ONE
+ONE TO MANY
+MANY TO MANY
+
+IL FAUT SE POSER LA QUESTION
+* POUR UNE ANNONCE COMBIEN ON PEUT ASSOCIER DE USER ?
+=> ONE
+=> une annonce est publiée par un utilisateur
+
+* POUR UN USER COMBIEN ON PEUT ASSOCIER D'ANNONCES ?
+=> MANY
+=> un utilisateur peut publier plusieurs annonces
+
+=> AVEC SQL, POUR AJOUTER UNE RELATION ONE TO MANY
+=> ON VA AJOUTER UNE COLONNE CLE ETRANGERE user_id DANS LA TABLE annonces
+=> CA ME DONNE COMME INFORMATION: POUR UNE ANNONCE C'EST TEL USER QUI L'A CREE
+=> CA REPOND A NOS BESOINS => COOL
+=> ASTUCE: ON AJOUTE LA COLONNE DANS LA TABLE DU MANY
+=> un user peut avoir plusieurs annonces
+=> on ajoute la colonne user_id dans la table SQL annonces
+
+=> ON VA AJOUTER UNE COLONNE CLE ETRANGERE annonce_id DANS LA TABLE users
+=> CA ME DONNE INFORMATION: POUR UN USER C'EST CETTE ANNONCE QU'IL A CREE
+=> FAUX
+=> un utilisateur peut publier plusieurs annonces
+
+AJOUTER LE CODE DANS 
+database/migrations/....create_table_annonces.php
+
+
+            // https://laravel.com/docs/5.0/schema#foreign-keys
+            // ON AJOUTE UNE COLONNE DE CLE ETRANGERE 
+            // POUR LA RELATION ONE TO MANY	
+            // AVEC LA TABLE SQL users
+            $table->bigInteger('user_id')->unsigned();
+            // $table->foreign('user_id')->references('id')->on('users');
+
+## RELANCER LA CREATION DES TABLES SQL A PARTIR DU CODE PHP
+
+LANCER LA COMMANDE EN LIGNE
+
+    php artisan migrate:refresh
 
 
 
