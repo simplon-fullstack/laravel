@@ -13,6 +13,36 @@ use Illuminate\Support\Facades\Auth;
 
 class AnnonceController extends Controller
 {
+    public function deconnexion ()
+    {
+        // https://laravel.com/docs/5.8/authentication#included-authenticating
+        Auth::logout();
+        // https://laravel.com/docs/6.x/redirects
+        return redirect('/');
+    }
+
+    // CETTE METHODE SERT A PROTEGER L'ACCES A L'ESPACE MEMBRE
+    public function afficherEspaceMembre ()
+    {
+        // ICI ON VA VERIFIER SI LE VISITEUR EST CONNECTE
+        // SI IL EST CONNECTE ET QU'IL A LE level >= 10
+        // DANS CE CAS IL PEUT ACCEDER A LA PAGE D'ESPACE MEMBRE
+        // SINON ON VA LE REDIRIGER VERS LA PAGE DE /login
+
+        // https://laravel.com/docs/5.8/authentication#retrieving-the-authenticated-user
+        $utilisateurConnecte = Auth::user();
+
+        if ($utilisateurConnecte != null && $utilisateurConnecte->level >= 10)
+        {
+            return view('espace-membre');
+        }
+        else
+        {
+            // https://laravel.com/docs/6.x/redirects
+            return redirect('/login');
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *

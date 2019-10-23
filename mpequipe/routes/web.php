@@ -38,8 +38,14 @@ Route::view('/', 'accueil');
 // LAVAREL VA AFFICHER LE CODE DE 
 // resources/views/espace-membre.blade.php
 
-Route::view('/espace-membre', 'espace-membre');
 Route::view('/espace-admin', 'espace-admin');
+
+// AVANT ON VAAIT UN ACCES DIRECT
+// Route::view('/espace-membre', 'espace-membre');
+// MAINTENANT ON VA PROTEGER L'ACCES
+Route::any('/espace-membre', 'AnnonceController@afficherEspaceMembre');
+// JE VAIS ME CREER MON LOGOUT
+Route::any('/deconnexion', 'AnnonceController@deconnexion');
 
 // https://laravel.com/docs/6.x/controllers#single-action-controllers
 // any => GET ou POST

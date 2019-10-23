@@ -1023,6 +1023,10 @@
 
     }
 
+## AJOUTER DES METHODES DE CONTROLLER POUR PROTEGER L'ACCES A L'ESPACE MEMBRE
+
+https://laravel.com/docs/5.8/authentication#included-authenticating
+
 
 
 
