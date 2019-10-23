@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+form input, form textarea {
+    display:block;
+    padding:0.2rem;
+    margin:0.25rem;
+}
+
+    </style>
 </head>
 <body>
     <div id="app">
@@ -20,9 +28,18 @@
         <main>
             <section>
                 <h3>FORMULAIRE DE CREATION D'UNE ANNONCE</h3>
-                <form action="" method="POST">
-                    <button type="submit">PUBLIER UNE ANNONCE</button>
-                </form>
+    <!-- CONVENTION LARAVEL POUR LE CREATE action="annonce/store" -->
+    <form method="POST" action="annonce/store">
+        <input type="text" name="titre" required placeholder="entrez votre titre">
+        <textarea name="contenu" required placeholder="entrez votre contenu"></textarea>
+        <input type="text" name="photo" required placeholder="entrez votre URL DE photo">
+        <input type="text" name="adresse" required placeholder="entrez votre adresse">
+        <input type="text" name="categorie" required placeholder="entrez votre categorie">
+        <input type="number" name="prix" required placeholder="entrez votre prix">
+        <button type="submit">PUBLIER UNE ANNONCE</button>
+        <!-- RACCOURCI BLADE POUR AJOUTER UN CHAMP HIDDEN -->
+        @csrf
+    </form>
             </section>
         </main>
         <footer>
