@@ -25,21 +25,33 @@ section {
 form {
     padding:0.2rem;
 }
-form input, form textarea {
+form input, form textarea, form button {
     display:block;
     padding:0.2rem;
     margin:0.25rem;
-}
-.listeAnnonce {
-    display:flex;
+    min-width:280px;
     width:100%;
-    flex-wrap:wrap;
+    max-width:640px;
+    font-family:monospace;
 }
-.listeAnnonce article {
-    margin:0.25rem;
-    padding:0.5rem;
-    width:calc(100% /3 - 0.5rem);
-    border:1px #aaaaaa solid;
+@media screen and (min-width: 425px) {
+    .listeAnnonce {
+        display:flex;
+        width:100%;
+        flex-wrap:wrap;
+    }
+    .listeAnnonce article {
+        margin:0.25rem;
+        padding:0.5rem;
+        width:calc(100% /2 - 0.5rem);
+        border:1px #aaaaaa solid;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .listeAnnonce article {
+        width:calc(100% /3 - 0.5rem);
+    }
 }
 
 .listeAnnonce article img {
@@ -53,12 +65,12 @@ form input, form textarea {
     left:0;
     width:100%;
     height:100%;
-    background-color:rgba(0,0,0,0.8);
+    background-color:rgba(100,100,100,0.8);
     overflow:auto;
 }
 .lightbox img {
-    max-width:300px;
-    max-height:300px;
+    width:150px;
+    height:150px;
     object-fit:cover;
 }
     </style>
@@ -81,7 +93,7 @@ form input, form textarea {
     <!-- SI FORM SANS AJAX ALORS NE PAS OUBLIER method="POST" et enctype="multipart/form-data" --> 
     <form @submit.prevent="envoyerFormAjax" method="POST" action="annonce/store" enctype="multipart/form-data">
         <input type="text" name="titre" required placeholder="entrez votre titre">
-        <textarea name="contenu" required placeholder="entrez votre contenu"></textarea>
+        <textarea name="contenu" required placeholder="entrez votre contenu" rows="8"></textarea>
         <input type="file" name="photo" required placeholder="choisissez votre photo">
         <input type="text" name="adresse" required placeholder="entrez votre adresse">
         <input type="text" name="categorie" required placeholder="entrez votre categorie">
@@ -101,7 +113,7 @@ form input, form textarea {
     <!-- https://fr.vuejs.org/v2/guide/forms.html -->
     <form @submit.prevent="envoyerFormAjax" method="POST" action="annonce/modifier" enctype="multipart/form-data">
         <input type="text" v-model="annonceUpdate.titre" name="titre" required placeholder="entrez votre titre">
-        <textarea name="contenu" v-model="annonceUpdate.contenu" required placeholder="entrez votre contenu"></textarea>
+        <textarea name="contenu" v-model="annonceUpdate.contenu" required placeholder="entrez votre contenu" rows="8"></textarea>
         <input type="file" name="photo" placeholder="choisissez votre photo">
         <img :src="annonceUpdate.photo">
         <input type="text" v-model="annonceUpdate.adresse" name="adresse" required placeholder="entrez votre adresse">
