@@ -44,6 +44,19 @@ form input, form textarea {
         @csrf
     </form>
             </section>
+
+
+            <section>
+                <h3>LISTE DE MES ANNONCES</h3>
+                <div class="listeAnnonce">
+                    <article v-for="annonce in annonces">
+                        <h4>@{{ annonce.titre }}</h4>
+                        <p>@{{ annonce.contenu }}</p>
+                        <button>modifier</button>
+                        <button>supprimer</button>
+                    </article>
+                </div>
+            </section>
         </main>
         <footer>
         <!-- IL Y A UN CONFLOT ENTRE BLADE ET VUEJS -->
@@ -82,11 +95,17 @@ var app = new Vue({
                     // ON VA STOCKER LA CONFORMATION DANS UNE VARIABLE VUEJS
                     app.confirmation = reponseObjetJSON.confirmation;
                 }
+                if (reponseObjetJSON.annonces)
+                {
+                    // ON VA STOCKER LA CONFORMATION DANS UNE VARIABLE VUEJS
+                    app.annonces = reponseObjetJSON.annonces;
+                }
           });
       }
   },
   data: {
       // ICI JE RAJOUTE LES VARIABLES GEREES PAR VUEJS
+    annonces: [],
     confirmation: 'ici on verra le message de confirmation',  
     message: 'Hello Vue !'
   }

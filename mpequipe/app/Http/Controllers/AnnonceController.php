@@ -137,6 +137,17 @@ class AnnonceController extends Controller
                 $tabAssoJson["confirmation"] = "VOTRE ANNONCE EST PUBLIEE"; 
             }
 
+            // JE VAIS RENVOYER LA LISTE DES ANNONCES DE CET UTILISATEUR
+            // IL FAUT FAIRE UNE REQUETE READ AVEC UN FILTRE
+            // https://laravel.com/docs/6.x/queries#where-clauses
+            $tabAnnonce = \App\Annonce
+                    // ON FILTRE SUR user_id POUR OBTENIR 
+                    // SEULEMENT LES ANNONCES DE L'UTILSATEUR CONNECTE
+                    ::where("user_id", "=", $utilisateurConnecte->id)
+                    ->latest("updated_at")   // CONSTRUCTION DE LA REQUETE
+                    ->get();                 // JE VEUX OBTENIR LES RESULTATS
+            $tabAssoJson["annonces"] = $tabAnnonce; 
+
         }
         else
         {
