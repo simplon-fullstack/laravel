@@ -6,12 +6,32 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
+html, body {
+    width:100%;
+    height:100%;
+    font-size:16px;
+}    
+
+* {
+    /* https://developer.mozilla.org/fr/docs/Web/CSS/box-sizing */
+    box-sizing:border-box;
+}    
+
 form input, form textarea {
     display:block;
     padding:0.2rem;
     margin:0.25rem;
 }
-
+.listeAnnonce {
+    display:flex;
+    width:100%;
+    flex-wrap:wrap;
+}
+.listeAnnonce article {
+    width:calc(100% /3);
+    padding:0.5rem;
+    border:1px #aaaaaa solid;
+}
     </style>
 </head>
 <body>
