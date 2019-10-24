@@ -37,7 +37,9 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        // désactiver la redirection vers home 
+        // si le visiteur est déjà connecté
+        // $this->middleware('guest');
     }
 
     /**
