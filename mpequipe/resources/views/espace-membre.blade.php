@@ -32,6 +32,15 @@ form input, form textarea {
     padding:0.5rem;
     border:1px #aaaaaa solid;
 }
+
+.lightbox {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,0.8);
+}
     </style>
 </head>
 <body>
@@ -64,7 +73,8 @@ form input, form textarea {
         @csrf
     </form>
             </section>
-            <section v-if="annonceUpdate">
+            <section class="lightbox" v-if="annonceUpdate">
+                <button @click="annonceUpdate = null">FERMER</button>
                 <h3>FORMULAIRE DE MODIFICATION D'UNE ANNONCE</h3>
     <!-- CONVENTION LARAVEL POUR LE CREATE action="annonce/store" -->
     <!-- https://fr.vuejs.org/v2/guide/forms.html -->
