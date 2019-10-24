@@ -32,7 +32,8 @@ class AnnonceController extends Controller
         // https://laravel.com/docs/5.8/authentication#retrieving-the-authenticated-user
         $utilisateurConnecte = Auth::user();
 
-        if ($utilisateurConnecte != null && $utilisateurConnecte->level >= 10)
+        if ($utilisateurConnecte != null 
+                && $utilisateurConnecte->level >= 10)
         {
             return view('espace-membre');
         }
@@ -113,6 +114,7 @@ class AnnonceController extends Controller
             {
                 // CAS OU IL Y A DES ERREURS
                 $tabAssoJson["erreur"] = "IL Y A DES ERREURS";
+                $tabAssoJson["confirmation"] = "IL Y A DES ERREURS";
             }
             else
             {
@@ -130,6 +132,9 @@ class AnnonceController extends Controller
                 $tabInput["user_id"] = $utilisateurConnecte->id;
 
                 Annonce::create($tabInput);
+
+                // RENVOYER UNE CONFIRMATION
+                $tabAssoJson["confirmation"] = "VOTRE ANNONCE EST PUBLIEE"; 
             }
 
         }
@@ -138,6 +143,7 @@ class AnnonceController extends Controller
             // ERREUR
             // IL FAUT ETRE CONNECTE POUR PUBLIER UNE ANNONCE
             $tabAssoJson["erreur"] = "IL FAUT ETRE CONNECTE POUR PUBLIER UNE ANNONCE";
+            $tabAssoJson["confirmation"] = "IL FAUT ETRE CONNECTE POUR PUBLIER UNE ANNONCE";
         }
 
 

@@ -31,7 +31,7 @@
 // car on obtient la liste pat id croissant
 // $tabAnnonce = \App\Annonce::all();
 $tabAnnonce = \App\Annonce
-                    ::latest("updated_at") // CONSTRUCTION DE LA REQUETE
+                    ::latest("updated_at")   // CONSTRUCTION DE LA REQUETE
                     ->get();                 // JE VEUX OBTENIR LES RESULTATS
 
 // debug
