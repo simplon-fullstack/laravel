@@ -5,6 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+html, body {
+    width:100%;
+    height:100%;
+    font-size:16px;
+}    
+
+* {
+    /* https://developer.mozilla.org/fr/docs/Web/CSS/box-sizing */
+    box-sizing:border-box;
+}    
+
+form input, form textarea {
+    display:block;
+    padding:0.2rem;
+    margin:0.25rem;
+}
+.listeAnnonce {
+    display:flex;
+    width:100%;
+    flex-wrap:wrap;
+}
+.listeAnnonce article {
+    width:calc(100% /3);
+    padding:0.5rem;
+    border:1px #aaaaaa solid;
+}
+
+.listeAnnonce article img {
+    width:100%;
+    height:200px;
+    object-fit:cover;
+}
+.lightbox {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,0.8);
+}
+    </style>
 </head>
 <body>
 <header>
@@ -22,6 +64,7 @@
     <main>
         <section>
             <h3>LISTE DES ANNONCES</h3>
+            <div class="listeAnnonce">
 <?php
 // ON VA AFFICHER DES ANNONCES AVEC PHP
 // ON VA FAIRE UN READ SUR LA TABLE SQL annonces
@@ -43,6 +86,7 @@ foreach($tabAnnonce as $annonce)
     echo
 <<<CODEHTML
 <article>
+    <img src="{$annonce->photo}">
     <h4>{$annonce->titre}</h4>
     <p>{$annonce->contenu}</p>
     <h5>{$annonce->id}</h5>
@@ -50,6 +94,7 @@ foreach($tabAnnonce as $annonce)
 CODEHTML;
 }
 ?>
+            </div>
         </section>
     </main>
     <footer>

@@ -176,7 +176,7 @@ class AnnonceController extends Controller
                 'id'        => 'required|numeric|min:1',
                 'titre'     => 'required|max:160',
                 'contenu'   => 'required',
-                'photo'     => 'required|max:160',
+                'photo'     => 'image',         // OPTIONNEL
                 'adresse'   => 'required|max:160',
                 'categorie' => 'required|max:160',
                 'prix'      => 'required|numeric|min:0|max:2000000',
@@ -198,8 +198,17 @@ class AnnonceController extends Controller
                 // IL FAUT AJOUTER DU CODE DANS
                 // app/Annonce.php
                 $tabInput = $request->only([
-                    "titre", "contenu", "photo", "adresse", "categorie", "prix"
+                    "titre", "contenu", "adresse", "categorie", "prix"
                 ]);
+                // JE DOIS TRAITER L'UPLOAD A PART
+                // https://laravel.com/docs/5.8/filesystem#file-uploads
+                $photoQuarantaine = $request->file("photo");
+                if ($photoQuarantaine) {
+                    // SI IL Y A UNE PHOTO (OPTIONNELLE)
+                    $photo = $photoQuarantaine->store("public/photos");
+                    // JE NE CHANGE LA PHOTO QUE SI ON EN A UPLOADE UNE NOUVELLE
+                    $tabInput["photo"] = str_replace("public/", "storage/", $photo);
+                }
 
                 // ON A BESOIN DE id POUR SAVOIR QUELLE LIGNE IL FAUT MODIFIER
 
@@ -301,7 +310,7 @@ class AnnonceController extends Controller
             $validator = Validator::make($request->all(), [
                 'titre'     => 'required|max:160',
                 'contenu'   => 'required',
-                'photo'     => 'required|max:160',
+                'photo'     => 'required|image', // SECURITE: PAS DE FICHIER PHP
                 'adresse'   => 'required|max:160',
                 'categorie' => 'required|max:160',
                 'prix'      => 'required|numeric|min:0|max:2000000',
@@ -323,8 +332,22 @@ class AnnonceController extends Controller
                 // IL FAUT AJOUTER DU CODE DANS
                 // app/Annonce.php
                 $tabInput = $request->only([
-                    "titre", "contenu", "photo", "adresse", "categorie", "prix"
+                    "titre", "contenu", "adresse", "categorie", "prix"
                 ]);
+
+                // JE DOIS TRAITER L'UPLOAD A PART
+                // https://laravel.com/docs/5.8/filesystem#file-uploads
+                $photo = $request->file("photo")->store("public/photos");
+                // LARAVEL VA CREER LE DOSSIER storage/app/public/photos/
+                // ET LARAVEL VA CREER UN NOM DE FICHIER ALEATOIRE
+                // IL FAUT LANCER LA LIGNE DE COMMANDE
+                // php artisan storage:link
+                // CETTE COMMANDE VA CREER UN RACCOURCI (lien symbolique)
+                // ENTRE storage/app/public/
+                // ET public/storage/
+                $tabInput["photo"] = str_replace("public/", "storage/", $photo);
+                
+                
                 // ON VA AJOUTER L'INFO DU user_id
                 $tabInput["user_id"] = $utilisateurConnecte->id;
 

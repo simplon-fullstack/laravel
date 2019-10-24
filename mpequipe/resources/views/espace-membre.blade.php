@@ -33,6 +33,11 @@ form input, form textarea {
     border:1px #aaaaaa solid;
 }
 
+.listeAnnonce article img {
+    width:100%;
+    max-height:200px;
+    object-fit:cover;
+}
 .lightbox {
     position:fixed;
     top:0;
@@ -40,6 +45,12 @@ form input, form textarea {
     width:100%;
     height:100%;
     background-color:rgba(0,0,0,0.8);
+    overflow:auto;
+}
+.lightbox img {
+    max-width:300px;
+    max-height:300px;
+    object-fit:cover;
 }
     </style>
 </head>
@@ -58,10 +69,11 @@ form input, form textarea {
             <section>
                 <h3>FORMULAIRE DE CREATION D'UNE ANNONCE</h3>
     <!-- CONVENTION LARAVEL POUR LE CREATE action="annonce/store" -->
-    <form @submit.prevent="envoyerFormAjax" method="POST" action="annonce/store">
+    <!-- SI FORM SANS AJAX ALORS NE PAS OUBLIER method="POST" et enctype="multipart/form-data" --> 
+    <form @submit.prevent="envoyerFormAjax" method="POST" action="annonce/store" enctype="multipart/form-data">
         <input type="text" name="titre" required placeholder="entrez votre titre">
         <textarea name="contenu" required placeholder="entrez votre contenu"></textarea>
-        <input type="text" name="photo" required placeholder="entrez votre URL DE photo">
+        <input type="file" name="photo" required placeholder="choisissez votre photo">
         <input type="text" name="adresse" required placeholder="entrez votre adresse">
         <input type="text" name="categorie" required placeholder="entrez votre categorie">
         <input type="number" name="prix" required placeholder="entrez votre prix">
@@ -78,12 +90,13 @@ form input, form textarea {
                 <h3>FORMULAIRE DE MODIFICATION D'UNE ANNONCE</h3>
     <!-- CONVENTION LARAVEL POUR LE CREATE action="annonce/store" -->
     <!-- https://fr.vuejs.org/v2/guide/forms.html -->
-    <form @submit.prevent="envoyerFormAjax" method="POST" action="annonce/modifier">
+    <form @submit.prevent="envoyerFormAjax" method="POST" action="annonce/modifier" enctype="multipart/form-data">
         <input type="text" v-model="annonceUpdate.titre" name="titre" required placeholder="entrez votre titre">
         <textarea name="contenu" v-model="annonceUpdate.contenu" required placeholder="entrez votre contenu"></textarea>
-        <input type="text"  v-model="annonceUpdate.photo"name="photo" required placeholder="entrez votre URL DE photo">
-        <input type="text"  v-model="annonceUpdate.adresse" name="adresse" required placeholder="entrez votre adresse">
-        <input type="text"  v-model="annonceUpdate.categorie" name="categorie" required placeholder="entrez votre categorie">
+        <input type="file" name="photo" placeholder="choisissez votre photo">
+        <img :src="annonceUpdate.photo">
+        <input type="text" v-model="annonceUpdate.adresse" name="adresse" required placeholder="entrez votre adresse">
+        <input type="text" v-model="annonceUpdate.categorie" name="categorie" required placeholder="entrez votre categorie">
         <input type="number"  v-model="annonceUpdate.prix" name="prix" required placeholder="entrez votre prix">
         <button type="submit">MODIFIER CETTE ANNONCE (id=@{{ annonceUpdate.id }})</button>
         <!-- ON UTILISE id POUR SELECTIONNER LA BONNE LIGNE SQL -->
@@ -103,6 +116,7 @@ form input, form textarea {
                     <article v-for="annonce in annonces">
                         <h4>@{{ annonce.titre }}</h4>
                         <p>@{{ annonce.contenu }}</p>
+                        <img :src="annonce.photo">
                         <button @click.prevent="modifierAnnonce(annonce)">modifier</button>
                         <!-- COOL: AVEC VUEJS JE PEUX PASSER annonce COMME SI C'ETAIT UNE VARIABLE JS-->
                         <button @click.prevent="supprimerAnnonce(annonce)">supprimer</button>
