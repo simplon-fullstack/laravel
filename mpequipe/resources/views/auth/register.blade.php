@@ -93,7 +93,7 @@ form input, form textarea, form button {
     </header>
     <main>
         <section>
-            <h3>MA SECTION ACCUEIL</h3>
+            <h3>MA SECTION INSCRIPTION</h3>
             <form method="POST" action="{{ route('register') }}">
                         @csrf
 

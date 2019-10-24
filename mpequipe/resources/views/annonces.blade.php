@@ -82,6 +82,7 @@ form input, form textarea, form button {
             <ul>
                 <li><a href="<?php echo url('/') ?>">accueil</a></li>
                 <li><a href="<?php echo url('/annonces') ?>">annonces</a></li>
+                <li><a href="<?php echo url('/register') ?>">inscription</a></li>
                 <li><a href="<?php echo url('/espace-membre') ?>">espace membre</a></li>
                 <li><a href="<?php echo url('/galerie') ?>">galerie</a></li>
                 <li><a href="<?php echo url('/contact') ?>">contact</a></li>

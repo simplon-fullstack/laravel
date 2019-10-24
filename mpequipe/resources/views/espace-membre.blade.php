@@ -82,6 +82,7 @@ form input, form textarea, form button {
             <nav>
                 <ul>
                     <li><a href="<?php echo url('/') ?>">accueil</a></li>
+                    <li><a href="<?php echo url('/annonces') ?>">annonces</a></li>
                     <li><a href="<?php echo url('/deconnexion') ?>">deconnexion</a></li>
                 </ul>
             </nav>
