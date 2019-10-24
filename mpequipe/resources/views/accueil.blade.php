@@ -7,6 +7,63 @@
     <title>MON SITE MARKETPLACE</title>
 
     <link rel="stylesheet" href="<?php echo url('/assets/css/style.css') ?>">
+    <style>
+html, body {
+    width:100%;
+    height:100%;
+    font-size:16px;
+    margin:0;
+    padding:0;
+}    
+
+* {
+    /* https://developer.mozilla.org/fr/docs/Web/CSS/box-sizing */
+    box-sizing:border-box;
+}    
+
+section {
+    padding:0.5rem;
+}
+form {
+    padding:0.2rem;
+}
+form input, form textarea {
+    display:block;
+    padding:0.2rem;
+    margin:0.25rem;
+}
+.listeAnnonce {
+    display:flex;
+    width:100%;
+    flex-wrap:wrap;
+}
+.listeAnnonce article {
+    margin:0.25rem;
+    padding:0.5rem;
+    width:calc(100% /3 - 0.5rem);
+    border:1px #aaaaaa solid;
+}
+
+.listeAnnonce article img {
+    width:100%;
+    max-height:200px;
+    object-fit:cover;
+}
+.lightbox {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,0.8);
+    overflow:auto;
+}
+.lightbox img {
+    max-width:300px;
+    max-height:300px;
+    object-fit:cover;
+}
+    </style>
 </head>
 <body>
     <header>
