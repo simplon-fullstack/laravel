@@ -63,6 +63,8 @@ Route::any('/newsletters/store', 'NewsletterController@store');
 Route::any('/annonce/store', 'AnnonceController@store');
 // DELETE
 Route::any('/annonce/supprimer', 'AnnonceController@supprimer');
+// UPDATE
+Route::any('/annonce/modifier', 'AnnonceController@modifier');
 
 Auth::routes();
 // CETTE LIGNE DE CODE CREE PLUSIEURS URLS DE ROUTE

@@ -124,7 +124,7 @@ class AnnonceController extends Controller
 
                 // ASTUCE: MEME SI id EST MAUVAIS
                 // ON VA QUAND MEME RENVOYER LA LISTE
-                
+
                 // JE VAIS RENVOYER LA LISTE DES ANNONCES DE CET UTILISATEUR
                 // IL FAUT FAIRE UNE REQUETE READ AVEC UN FILTRE
                 // https://laravel.com/docs/6.x/queries#where-clauses
@@ -137,6 +137,126 @@ class AnnonceController extends Controller
                 $tabAssoJson["annonces"] = $tabAnnonce; 
             }
         }
+
+        return $tabAssoJson;
+        // NOTE: CE SERA LARAVEL QUI VA TRANSFORMER 
+        // LE TABLEAU ASSOCIATIF EN JSON
+    }
+
+    // METHODE APPELEE POUR LA MODIFICATION D'UNE ANNONCE 
+    public function modifier(Request $request)
+    {
+        // ICI ON DOIT TRAITER LE FORMULAIRE DE CREATE
+        // ...
+        // ON VA RENVOYER DU FORMAT JSON
+        // EN PHP, ON VA UTILISER UN TABLEAU ASSOCIATIF
+        $tabAssoJson = [];
+        $tabAssoJson["test"] = date("Y-m-d H:i:s");
+
+        // ON DOIT VERIFIER SI L'UTILISATEUR CONNECTE 
+        // A LE DROIT DE CREER DES ANNONCES
+        // https://laravel.com/docs/5.8/authentication#retrieving-the-authenticated-user
+        $utilisateurConnecte = Auth::user();
+
+        if ($utilisateurConnecte != null && $utilisateurConnecte->level >= 10)
+        {
+            // IL FAUDRA RAJOUTER UN TEST SUPPLEMENTAIRE SUR LE level
+            // level >= 10
+            
+            // debug
+            $tabAssoJson["utilisateurConnecte"] = $utilisateurConnecte;
+            
+            // SECURITE: ICI ON DOIT VERIFIER QUE LES INFOS SONT CORRECTES
+            // ON DOIT RECUPERER LES INFOS ENVOYEES PAR LE NAVIGATEUR        
+            // ON VA STOCKER LES INFOS DANS LA TABLE SQL annonces
+            // https://laravel.com/docs/5.7/validation#manually-creating-validators
+            // https://laravel.com/docs/5.7/validation#available-validation-rules
+
+            $validator = Validator::make($request->all(), [
+                'id'        => 'required|numeric|min:1',
+                'titre'     => 'required|max:160',
+                'contenu'   => 'required',
+                'photo'     => 'required|max:160',
+                'adresse'   => 'required|max:160',
+                'categorie' => 'required|max:160',
+                'prix'      => 'required|numeric|min:0|max:2000000',
+            ]);
+
+            if ($validator->fails()) 
+            {
+                // CAS OU IL Y A DES ERREURS
+                $tabAssoJson["erreur"] = "IL Y A DES ERREURS";
+                $tabAssoJson["confirmation"] = "IL Y A DES ERREURS";
+            }
+            else
+            {
+                // CAS OU TOUTES LES INFOS SONT CORRECTES
+                // ON PEUT LES STOCKER DANS LA TABLE SQL annonces
+                // https://laravel.com/docs/5.8/eloquent#mass-assignment
+                // ATTENTION: NE PAS OUBLIER LE PARAMETRAGE OBLIGATOIRE AVANT DE FAIRE CE CODE
+                // sinon erreur: Add [titre] to fillable property to allow mass assignment on [App\Annonce].
+                // IL FAUT AJOUTER DU CODE DANS
+                // app/Annonce.php
+                $tabInput = $request->only([
+                    "titre", "contenu", "photo", "adresse", "categorie", "prix"
+                ]);
+
+                // ON A BESOIN DE id POUR SAVOIR QUELLE LIGNE IL FAUT MODIFIER
+
+                // ON VA AJOUTER L'INFO DU user_id
+                $tabInput["user_id"] = $utilisateurConnecte->id;
+
+                // IL FAUT VERIFIER SI L'ANNONCE APPARTIENT BIEN AU MEMBRE CONNECTE
+                $id = $request->input("id");
+                // AVEC LARAVEL, ON A UNE METHODE find QUI PERMET DE CHERCHER AVEC id
+                // https://laravel.com/docs/6.x/queries#retrieving-results
+                $annonce = Annonce::find($id);
+                if ($annonce) 
+                {
+                    // ON A TROUVE UNE ANNONCE AVEC CET id
+                    if ($annonce->user_id == $utilisateurConnecte->id)
+                    {
+                        // OK L'ANNONCE A ETE CREE PAR LE MEMBRE CONNECTE
+                        // https://laravel.com/docs/6.x/eloquent#updates
+                        // UN PEU COMME POUR create, 
+                        // ON DONNE LES NOUVELLES VALEURS DANS UN TABLEAU ASSOCIATIF
+                        $annonce->fill($tabInput);
+
+                        // POUR ENREGISTRER DANS LA TABLE SQL
+                        $annonce->save();
+
+                        // RENVOYER UNE CONFIRMATION
+                        $tabAssoJson["confirmation"] = "L'ANNONCE A ETE MODIFIEE"; 
+                    }
+                    else
+                    {
+                        // KO UN MEMBRE ESSAIE D'EFFACER UNE ANNONCE QUI NE LUI APPARTIENT PAS
+                        // RENVOYER UNE CONFIRMATION
+                        $tabAssoJson["confirmation"] = "CETTE ANNONCE NE VOUS APPARTIENT PAS"; 
+                    }
+                }
+            }
+
+            // JE VAIS RENVOYER LA LISTE DES ANNONCES DE CET UTILISATEUR
+            // IL FAUT FAIRE UNE REQUETE READ AVEC UN FILTRE
+            // https://laravel.com/docs/6.x/queries#where-clauses
+            $tabAnnonce = \App\Annonce
+                    // ON FILTRE SUR user_id POUR OBTENIR 
+                    // SEULEMENT LES ANNONCES DE L'UTILSATEUR CONNECTE
+                    ::where("user_id", "=", $utilisateurConnecte->id)
+                    ->latest("updated_at")   // CONSTRUCTION DE LA REQUETE
+                    ->get();                 // JE VEUX OBTENIR LES RESULTATS
+            $tabAssoJson["annonces"] = $tabAnnonce; 
+        }
+        else
+        {
+            // ERREUR
+            // IL FAUT ETRE CONNECTE POUR PUBLIER UNE ANNONCE
+            $tabAssoJson["erreur"] = "IL FAUT ETRE CONNECTE POUR PUBLIER UNE ANNONCE";
+            $tabAssoJson["confirmation"] = "IL FAUT ETRE CONNECTE POUR PUBLIER UNE ANNONCE";
+        }
+
+
 
         return $tabAssoJson;
         // NOTE: CE SERA LARAVEL QUI VA TRANSFORMER 
