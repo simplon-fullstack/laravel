@@ -44,7 +44,7 @@ form input, form textarea {
 
 .listeAnnonce article img {
     width:100%;
-    max-height:200px;
+    height:200px;
     object-fit:cover;
 }
 .lightbox {
@@ -102,6 +102,7 @@ foreach($tabAnnonce as $annonce)
 <<<CODEHTML
 <article>
     <img src="{$annonce->photo}">
+    <h5>{$annonce->categorie} | {$annonce->prix} euros</h5>
     <h4>{$annonce->titre}</h4>
     <p>{$annonce->contenu}</p>
     <h5>{$annonce->id}</h5>

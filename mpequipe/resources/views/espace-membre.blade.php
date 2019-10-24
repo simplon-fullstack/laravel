@@ -44,7 +44,7 @@ form input, form textarea {
 
 .listeAnnonce article img {
     width:100%;
-    max-height:200px;
+    height:200px;
     object-fit:cover;
 }
 .lightbox {
