@@ -61,6 +61,8 @@ Route::any('/newsletters/store', 'NewsletterController@store');
 // AnnonceController => classe qui contient les codes PHP POUR LE CRUD SUR LA TABLE SQL annonces
 // store        => LA METHODE DANS LA CLASSE AnnonceController QUE LARAVEL VA ACTIVER
 Route::any('/annonce/store', 'AnnonceController@store');
+// DELETE
+Route::any('/annonce/supprimer', 'AnnonceController@supprimer');
 
 Auth::routes();
 // CETTE LIGNE DE CODE CREE PLUSIEURS URLS DE ROUTE

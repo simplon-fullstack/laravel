@@ -66,6 +66,83 @@ class AnnonceController extends Controller
         // NOUS N'AVONS PAS UTILISE CE MOYEN...
     }
 
+
+    public function supprimer (Request $request)
+    {
+        // ICI ON DOIT TRAITER LE FORMULAIRE DE CREATE
+        // ...
+        // ON VA RENVOYER DU FORMAT JSON
+        // EN PHP, ON VA UTILISER UN TABLEAU ASSOCIATIF
+        $tabAssoJson = [];
+        $tabAssoJson["test"] = date("Y-m-d H:i:s");
+
+        // ON DOIT VERIFIER SI L'UTILISATEUR CONNECTE 
+        // A LE DROIT DE CREER DES ANNONCES
+        // https://laravel.com/docs/5.8/authentication#retrieving-the-authenticated-user
+        $utilisateurConnecte = Auth::user();
+
+        if ($utilisateurConnecte != null && $utilisateurConnecte->level >= 10)
+        {
+            $validator = Validator::make($request->all(), [
+                'id'      => 'required|numeric',
+            ]);
+            if ($validator->fails()) 
+            {
+                // CAS OU IL Y A DES ERREURS
+                $tabAssoJson["erreur"] = "IL Y A DES ERREURS";
+                $tabAssoJson["confirmation"] = "IL Y A DES ERREURS";
+            }
+            else
+            {
+                // IL FAUT RECUPERER L'ID
+                // A PARTIR DE L'ID, JE VAIS RETROUVER L'ANNONCE (READ)
+                // IL FAUT VERIFIER SI L'ANNONCE APPARTIENT BIEN AU MEMBRE CONNECTE
+                $id = $request->input("id");
+                // AVEC LARAVEL, ON A UNE METHODE find QUI PERMET DE CHERCHER AVEC id
+                // https://laravel.com/docs/6.x/queries#retrieving-results
+                $annonce = Annonce::find($id);
+                if ($annonce) 
+                {
+                    // ON A TROUVE UNE ANNONCE AVEC CET id
+                    if ($annonce->user_id == $utilisateurConnecte->id)
+                    {
+                        // OK L'ANNONCE A ETE CREE PAR LE MEMEBRE CONNECTE
+                        // https://laravel.com/docs/6.x/eloquent#deleting-models
+                        $annonce->delete();
+
+                        // RENVOYER UNE CONFIRMATION
+                        $tabAssoJson["confirmation"] = "L'ANNONCE A ETE SUPPRIMEE"; 
+                    }
+                    else
+                    {
+                        // KO UN MEMBRE ESSAIE D'EFFACER UNE ANNONCE QUI NE LUI APPARTIENT PAS
+                        // RENVOYER UNE CONFIRMATION
+                        $tabAssoJson["confirmation"] = "CETTE ANNONCE NE VOUS APPARTIENT PAS"; 
+                    }
+
+                }
+
+                // ASTUCE: MEME SI id EST MAUVAIS
+                // ON VA QUAND MEME RENVOYER LA LISTE
+                
+                // JE VAIS RENVOYER LA LISTE DES ANNONCES DE CET UTILISATEUR
+                // IL FAUT FAIRE UNE REQUETE READ AVEC UN FILTRE
+                // https://laravel.com/docs/6.x/queries#where-clauses
+                $tabAnnonce = \App\Annonce
+                        // ON FILTRE SUR user_id POUR OBTENIR 
+                        // SEULEMENT LES ANNONCES DE L'UTILSATEUR CONNECTE
+                        ::where("user_id", "=", $utilisateurConnecte->id)
+                        ->latest("updated_at")   // CONSTRUCTION DE LA REQUETE
+                        ->get();                 // JE VEUX OBTENIR LES RESULTATS
+                $tabAssoJson["annonces"] = $tabAnnonce; 
+            }
+        }
+
+        return $tabAssoJson;
+        // NOTE: CE SERA LARAVEL QUI VA TRANSFORMER 
+        // LE TABLEAU ASSOCIATIF EN JSON
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -207,6 +284,6 @@ class AnnonceController extends Controller
      */
     public function destroy(Annonce $annonce)
     {
-        // ICI ON DEVRAIT TRAITER LE FORMUALIRE DE DELETE
+        // ICI ON DEVRAIT TRAITER LE FORMULAIRE DE DELETE
     }
 }

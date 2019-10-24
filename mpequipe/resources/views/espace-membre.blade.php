@@ -73,7 +73,8 @@ form input, form textarea {
                         <h4>@{{ annonce.titre }}</h4>
                         <p>@{{ annonce.contenu }}</p>
                         <button>modifier</button>
-                        <button>supprimer</button>
+                        <!-- COOL: AVEC VUEJS JE PEUX PASSER annonce COMME SI C'ETAIT UNE VARIABLE JS-->
+                        <button @click.prevent="supprimerAnnonce(annonce)">supprimer</button>
                     </article>
                 </div>
             </section>
@@ -93,6 +94,39 @@ form input, form textarea {
 var app = new Vue({
   el: '#app',
   methods: {
+      supprimerAnnonce: function (annonce) {
+        // debug
+        console.log(annonce);
+        // JE PEUX RECUPERER id A SUPPRIMER
+        var formData = new FormData();
+        // JE SIMULE EN JS LES INFOS DU FORMULAIRE
+        formData.append('id', annonce.id);
+        // sécurité laravel
+        // https://laravel.com/docs/5.8/csrf#csrf-x-csrf-token
+        formData.append('_token', '{{ csrf_token() }}');
+
+        fetch('annonce/supprimer', {
+            method: 'POST',
+            body: formData
+        })
+        .then(function(reponse) {
+              // ON CONVERTIT LE MESSAGE DE REPONSE EN OBJET JSON
+              return reponse.json();
+          })
+        .then(function(reponseObjetJSON) {
+            if (reponseObjetJSON.confirmation)
+            {
+                // ON VA STOCKER LA CONFORMATION DANS UNE VARIABLE VUEJS
+                app.confirmation = reponseObjetJSON.confirmation;
+            }
+            if (reponseObjetJSON.annonces)
+            {
+                // ON VA STOCKER LA CONFORMATION DANS UNE VARIABLE VUEJS
+                app.annonces = reponseObjetJSON.annonces;
+            }
+        });
+
+      },
       envoyerFormAjax: function (event) {
           // debug
           console.log(event.target);
