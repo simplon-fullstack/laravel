@@ -1043,9 +1043,6 @@ https://laravel.com/docs/5.8/authentication#included-authenticating
 
 
 
-    https://laravel.com/docs/5.8/validation#rule-in
-
-
 
 
 
