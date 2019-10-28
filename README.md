@@ -1028,6 +1028,24 @@
 https://laravel.com/docs/5.8/authentication#included-authenticating
 
 
+## LUNDI 28/10
+
+## VERIFICATION DE VALEUR DANS UNE LISTE DONNEE
+
+    * COTE FRONT
+    SI UN FORMULAIRE PROPOSE UN NOMBRE DE CHOIX LIMITE
+    (SELECT OU INPUT TYPE RADIO)
+    
+    * COTE BACK
+    ON PEUT VALIDER QU'UNE INFORMATION DE FORMULAIRE EST DANS UNE LISTE DE VALEURS DONNEE AVEC Rule::in
+
+    https://laravel.com/docs/5.8/validation#rule-in
+
+
+
+    https://laravel.com/docs/5.8/validation#rule-in
+
+
 
 
 
