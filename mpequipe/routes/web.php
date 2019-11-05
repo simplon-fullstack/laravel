@@ -81,3 +81,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 // ON VA UTILISER LE TEMPLATE 
 // /resources/views/annonces.blade.php
 Route::view('/annonces', 'annonces');
+
+// ON AJOUTE UNE PAGE DE RECHERCHE
+// QUI VA AFFICHER LA LISTE DES ANNONCES
+// ON VA UTILISER LE TEMPLATE 
+// /resources/views/recherche.blade.php
+Route::view('/recherche', 'recherche');
+
+
+
+

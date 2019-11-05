@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MON SITE MARKETPLACE</title>
-
-    <link rel="stylesheet" href="<?php echo url('/assets/css/style.css') ?>">
+    <title>Document</title>
     <style>
 html, body {
     width:100%;
@@ -78,13 +76,14 @@ form input, form textarea, form button {
     </style>
 </head>
 <body>
-    <header>
+    <div id="app">
+
+<header>
         <h1>MON SITE MARKETPLACE</h1>
         <nav>
             <ul>
                 <li><a href="<?php echo url('/') ?>">accueil</a></li>
                 <li><a href="<?php echo url('/annonces') ?>">annonces</a></li>
-                <li><a href="<?php echo url('/recherche') ?>">recherche</a></li>
                 <li><a href="<?php echo url('/register') ?>">inscription</a></li>
                 <li><a href="<?php echo url('/espace-membre') ?>">espace membre</a></li>
                 <li><a href="<?php echo url('/galerie') ?>">galerie</a></li>
@@ -94,30 +93,65 @@ form input, form textarea, form button {
     </header>
     <main>
         <section>
-            <h3>MA SECTION ACCUEIL</h3>
-        </section>
-
-        <section>
-            <h3>FORMULAIRE DE NEWSLETTER</h3>
-            <form action="newsletters/store" method="POST">
-                <input type="text" name="nom" required>
-                <input type="email" name="email" required>
-                <button type="submit">INSCRIPTION</button>
-                <!-- VA CREER UN CHAMP INPUT HIDDEN POUR LARAVEL (SECURITE) -->
-                @csrf
+            <h3>FORMULAIRE DE RECHERCHE DES ANNONCES</h3>
+            <form action="">
+                <input type="text" name="codePostal" required placeholder="entrez un code postal">
+                <button type="submit">LANCER LA RECHERCHE</button>
             </form>
+        </section>
+        <section>
+            <h3>RECHERCHER DES ANNONCES</h3>
+            <div class="listeAnnonce">
+<?php
+// ON VA AFFICHER DES ANNONCES AVEC PHP
+// ON VA FAIRE UN READ SUR LA TABLE SQL annonces
+// AVEC Laravel, ON PASSE PAR LA CLASSE Annonce
+
+// trop basique 
+// car on obtient la liste pat id croissant
+// $tabAnnonce = \App\Annonce::all();
+$tabAnnonce = \App\Annonce
+                    ::latest("updated_at")   // CONSTRUCTION DE LA REQUETE
+                    ->get();                 // JE VEUX OBTENIR LES RESULTATS
+
+// debug
+// print_r($tabAnnonce);
+foreach($tabAnnonce as $annonce)
+{
+    // LES COLONNES SONT DES PROPRIETES 
+    // DES OBJETS DE LA CLASSE Annonce
+    echo
+<<<CODEHTML
+<article>
+    <img src="{$annonce->photo}">
+    <h5>{$annonce->categorie} | {$annonce->prix} euros</h5>
+    <h4>{$annonce->titre}</h4>
+    <p>{$annonce->contenu}</p>
+    <h5>{$annonce->id}</h5>
+</article>
+CODEHTML;
+}
+?>
+            </div>
         </section>
     </main>
     <footer>
-    <nav>
-            <ul>
-                <li><a href="<?php echo url('/espace-membre') ?>">membre</a></li>
-                <li><a href="<?php echo url('/espace-admin') ?>">admin</a></li>
-            </ul>
-        </nav>
-        <p>tous droits réservés 2019</p>
+        @{{ message }}
+        <p>tous droits réservés - &copy;2019</p>
     </footer>
+        </div><!-- FIN DU CONTAINER POUR VUEJS -->
 
-    <script src="<?php echo url('/assets/js/main.js') ?>"></script>
+    <!-- JE CHARGE LE CODE DE VUEJS -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+    // MAINTENANT JE PEUX UTILISER VUEJS
+    var app = new Vue({
+  el: '#app',
+  data: {
+    message: 'Hello Vue !'
+  }
+})
+    </script>
+
 </body>
 </html>
