@@ -13,6 +13,19 @@ use Illuminate\Support\Facades\Auth;
 
 class AnnonceController extends Controller
 {
+    public function rechercher (Request $request)
+    {
+        $tabAssoJson = [];
+
+        // DEBUG
+        $tabAssoJson["request"] = $request->all();
+
+        return $tabAssoJson;
+        // COOL AVEC LARAVEL 
+        // => LARAVEL TRANSFORME LE TABLEAU ASSOCIATIF PHP EN TEXTE JSON
+        // (fonction PHP json_encode)
+    }
+
     public function deconnexion ()
     {
         // https://laravel.com/docs/5.8/authentication#included-authenticating

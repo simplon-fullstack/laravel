@@ -88,6 +88,8 @@ Route::view('/annonces', 'annonces');
 // /resources/views/recherche.blade.php
 Route::view('/recherche', 'recherche');
 
+// RECHERCHE AJAX
+Route::any('/annonce/rechercher', 'AnnonceController@rechercher');
 
 
 

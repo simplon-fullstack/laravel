@@ -84,6 +84,7 @@ form input, form textarea, form button {
             <ul>
                 <li><a href="<?php echo url('/') ?>">accueil</a></li>
                 <li><a href="<?php echo url('/annonces') ?>">annonces</a></li>
+                <li><a href="<?php echo url('/recherche') ?>">recherche</a></li>
                 <li><a href="<?php echo url('/register') ?>">inscription</a></li>
                 <li><a href="<?php echo url('/espace-membre') ?>">espace membre</a></li>
                 <li><a href="<?php echo url('/galerie') ?>">galerie</a></li>
@@ -94,9 +95,12 @@ form input, form textarea, form button {
     <main>
         <section>
             <h3>FORMULAIRE DE RECHERCHE DES ANNONCES</h3>
-            <form action="">
+            <form @submit.prevent="rechercherAjax" action="">
                 <input type="text" name="codePostal" required placeholder="entrez un code postal">
                 <button type="submit">LANCER LA RECHERCHE</button>
+                <!-- PROTECTION DE LARAVEL CONTRE LES ATTAQUES CSRF -->
+                <!-- Sécurité: Cross Site Request Forgery -->
+                @csrf
             </form>
         </section>
         <section>
@@ -147,6 +151,24 @@ CODEHTML;
     // MAINTENANT JE PEUX UTILISER VUEJS
     var app = new Vue({
   el: '#app',
+  methods: {
+    rechercherAjax: function (event) {
+        // debug
+        // event.target CONTIENT LA BALISE form
+        console.log(event.target);
+
+        // ON VA RECUPERER LES INFOS DU FORMULAIRE
+        var formData = new FormData(event.target);
+        // ET ENSUITE ON VA LANCER UNE REQUETE AJAX AVEC fetch
+        // POUR RECUPERER LA LISTE DES RESULTATS DE RECHERCHE
+        // JE DOIS CREER UNE ROUTE AVEC CETTE URL /annonce/rechercher
+        // POUR TRAITER LA REQUETE AJAX
+        fetch('annonce/rechercher', {
+            method: 'POST',
+            body: formData  // TRANSMET LES INFOS DU FORMULAIRE DANS LA REQUETE AJAX
+        });
+    }
+  },
   data: {
     message: 'Hello Vue !'
   }
