@@ -451,6 +451,7 @@ class AnnonceController extends Controller
                     "titre", "contenu", "adresse", "categorie", "prix"
                 ]);
 
+                
                 // JE DOIS TRAITER L'UPLOAD A PART
                 // https://laravel.com/docs/5.8/filesystem#file-uploads
                 $photo = $request->file("photo")->store("public/photos");
@@ -466,6 +467,9 @@ class AnnonceController extends Controller
                 
                 // ON VA AJOUTER L'INFO DU user_id
                 $tabInput["user_id"] = $utilisateurConnecte->id;
+                // COMPLETER AVEC dateEvenement
+                $tabInput["dateEvenement"] = date("Y-m-d");
+                $tabInput["codePostal"] = "13013";
 
                 Annonce::create($tabInput);
 
