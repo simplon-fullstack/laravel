@@ -20,6 +20,31 @@ class AnnonceController extends Controller
         // DEBUG
         $tabAssoJson["request"] = $request->all();
 
+        $validator = Validator::make($request->all(), [
+            'codePostal'      => 'required|min:5|max:5',
+        ]);
+        if ($validator->fails()) 
+        {
+            // ERREUR DANS LES INFOS RECUES
+            $tabAssoJson["confirmation"] = "INFOS INCORRECTES";
+        }
+        else
+        {
+            // ON VA RECHERCHER LA LISTE DES ANNONCES 
+            // QUI CORRESPONDENT AUX CRITERES DE RECHERCHE
+            // UNE FOIS QU'ON A LES RESULTATS
+            // ON VA LES RENVOYER DANS LE TABLEAU ASSOCIATIF
+                // JE VAIS RENVOYER LA LISTE DES ANNONCES DE CET UTILISATEUR
+                // IL FAUT FAIRE UNE REQUETE READ AVEC UN FILTRE
+                // https://laravel.com/docs/6.x/queries#where-clauses
+                $tabAnnonce = \App\Annonce
+                        // ON FILTRE SUR user_id POUR OBTENIR 
+                        // SEULEMENT LES ANNONCES DE L'UTILSATEUR CONNECTE
+                        ::where("codePostal", "=", $request->input("codePostal"))
+                        ->latest("updated_at")   // CONSTRUCTION DE LA REQUETE
+                        ->get();                 // JE VEUX OBTENIR LES RESULTATS
+                $tabAssoJson["annonces"] = $tabAnnonce; 
+        }
         return $tabAssoJson;
         // COOL AVEC LARAVEL 
         // => LARAVEL TRANSFORME LE TABLEAU ASSOCIATIF PHP EN TEXTE JSON
