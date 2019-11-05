@@ -40,79 +40,87 @@ class AnnonceController extends Controller
             // QUI CORRESPONDENT AUX CRITERES DE RECHERCHE
             // UNE FOIS QU'ON A LES RESULTATS
             // ON VA LES RENVOYER DANS LE TABLEAU ASSOCIATIF
-                // JE VAIS RENVOYER LA LISTE DES ANNONCES DE CET UTILISATEUR
-                // IL FAUT FAIRE UNE REQUETE READ AVEC UN FILTRE
-                // https://laravel.com/docs/6.x/queries#where-clauses
+            // JE VAIS RENVOYER LA LISTE DES ANNONCES DE CET UTILISATEUR
+            // IL FAUT FAIRE UNE REQUETE READ AVEC UN FILTRE
+            // https://laravel.com/docs/6.x/queries#where-clauses
 
+            // CODE BASIQUE SUR DIFFERENTS SCENARIOS POSSIBLES
+            $codePostal = $request->input("codePostal");
+            $dateDebut  = $request->input("dateDebut");
+            $dateFin    = $request->input("dateFin");
 
-                // CODE BASIQUE SUR DIFFERENTS SCENARIOS POSSIBLES
-                $codePostal = $request->input("codePostal");
-                $dateDebut  = $request->input("dateDebut");
-                $dateFin    = $request->input("dateFin");
+            // ON NE VEUT QUE LES EVENEMENTS FUTURS
+            $dateJour  = date("Y-m-d");
 
-                // ON A codePostal MAIS NI dateDebut NI dateFIN
-                if (($dateDebut == null) && ($dateFin == null))
-                {
-                    $tabAnnonce = \App\Annonce
-                    // ON FILTRE SUR user_id POUR OBTENIR 
-                    // SEULEMENT LES ANNONCES DE L'UTILSATEUR CONNECTE
-                    ::where("codePostal", "=", $codePostal)
-                    ->latest("updated_at")   // CONSTRUCTION DE LA REQUETE
-                    ->get();                 // JE VEUX OBTENIR LES RESULTATS
+            // ON A codePostal MAIS NI dateDebut NI dateFIN
+            if (($dateDebut == null) && ($dateFin == null))
+            {
+                $tabAnnonce = \App\Annonce
+                // ON FILTRE SUR user_id POUR OBTENIR 
+                // SEULEMENT LES ANNONCES DE L'UTILSATEUR CONNECTE
+                ::where([
+                    [ "codePostal",     "=", $codePostal],
+                    [ "dateEvenement",  ">=", $dateJour],
+                ])
+                ->latest("updated_at")   // CONSTRUCTION DE LA REQUETE
+                ->get();                 // JE VEUX OBTENIR LES RESULTATS
 
-                    $tabAssoJson["annonces"] = $tabAnnonce; 
-                }
-                // ON A TOUTES LES CRITERES DE RECHERCHE
-                if (($dateDebut != null) && ($dateFin != null))
-                {
-                    // https://laravel.com/docs/5.7/queries#where-clauses
-                    $tabAnnonce = \App\Annonce
-                    // ON FILTRE SUR user_id POUR OBTENIR 
-                    // SEULEMENT LES ANNONCES DE L'UTILSATEUR CONNECTE
-                    ::where([
-                        [ "codePostal",     "=", $codePostal],
-                        [ "dateEvenement",  ">=", $dateDebut],
-                        [ "dateEvenement",  "<=", $dateFin],
-                    ])
-                    ->latest("updated_at")   // CONSTRUCTION DE LA REQUETE
-                    ->get();                 // JE VEUX OBTENIR LES RESULTATS
+                $tabAssoJson["annonces"] = $tabAnnonce; 
+            }
+            // ON A TOUTES LES CRITERES DE RECHERCHE
+            if (($dateDebut != null) && ($dateFin != null))
+            {
+                // https://laravel.com/docs/5.7/queries#where-clauses
+                $tabAnnonce = \App\Annonce
+                // ON FILTRE SUR user_id POUR OBTENIR 
+                // SEULEMENT LES ANNONCES DE L'UTILSATEUR CONNECTE
+                ::where([
+                    [ "codePostal",     "=", $codePostal],
+                    [ "dateEvenement",  ">=", $dateJour],
+                    [ "dateEvenement",  ">=", $dateDebut],
+                    [ "dateEvenement",  "<=", $dateFin],
+                ])
+                ->latest("updated_at")   // CONSTRUCTION DE LA REQUETE
+                ->get();                 // JE VEUX OBTENIR LES RESULTATS
 
-                    $tabAssoJson["annonces"] = $tabAnnonce; 
+                $tabAssoJson["annonces"] = $tabAnnonce; 
 
-                }
-                // ON A QUE dateDebut
-                if (($dateDebut != null) && ($dateFin == null))
-                {
-                    // https://laravel.com/docs/5.7/queries#where-clauses
-                    $tabAnnonce = \App\Annonce
-                    // ON FILTRE SUR user_id POUR OBTENIR 
-                    // SEULEMENT LES ANNONCES DE L'UTILSATEUR CONNECTE
-                    ::where([
-                        [ "codePostal",     "=", $codePostal],
-                        [ "dateEvenement",  ">=", $dateDebut],
-                    ])
-                    ->latest("updated_at")   // CONSTRUCTION DE LA REQUETE
-                    ->get();                 // JE VEUX OBTENIR LES RESULTATS
+            }
+            // ON A QUE dateDebut
+            if (($dateDebut != null) && ($dateFin == null))
+            {
+                // https://laravel.com/docs/5.7/queries#where-clauses
+                $tabAnnonce = \App\Annonce
+                // ON FILTRE SUR user_id POUR OBTENIR 
+                // SEULEMENT LES ANNONCES DE L'UTILSATEUR CONNECTE
+                ::where([
+                    [ "codePostal",     "=", $codePostal],
+                    [ "dateEvenement",  ">=", $dateJour],
+                    [ "dateEvenement",  ">=", $dateDebut],
+                ])
+                ->latest("updated_at")   // CONSTRUCTION DE LA REQUETE
+                ->get();                 // JE VEUX OBTENIR LES RESULTATS
 
-                    $tabAssoJson["annonces"] = $tabAnnonce; 
-                }
-                // ON A QUE dateFin
-                if (($dateDebut == null) && ($dateFin != null))
-                {
-                    // https://laravel.com/docs/5.7/queries#where-clauses
-                    $tabAnnonce = \App\Annonce
-                    // ON FILTRE SUR user_id POUR OBTENIR 
-                    // SEULEMENT LES ANNONCES DE L'UTILSATEUR CONNECTE
-                    ::where([
-                        [ "codePostal",     "=", $codePostal],
-                        [ "dateEvenement",  "<=", $dateFin],
-                    ])
-                    ->latest("updated_at")   // CONSTRUCTION DE LA REQUETE
-                    ->get();                 // JE VEUX OBTENIR LES RESULTATS
+                $tabAssoJson["annonces"] = $tabAnnonce; 
+            }
+            // ON A QUE dateFin
+            if (($dateDebut == null) && ($dateFin != null))
+            {
+                // https://laravel.com/docs/5.7/queries#where-clauses
+                $tabAnnonce = \App\Annonce
+                // ON FILTRE SUR user_id POUR OBTENIR 
+                // SEULEMENT LES ANNONCES DE L'UTILSATEUR CONNECTE
+                ::where([
+                    [ "codePostal",     "=", $codePostal],
+                    [ "dateEvenement",  ">=", $dateJour],
+                    [ "dateEvenement",  "<=", $dateFin],
+                ])
+                ->latest("updated_at")   // CONSTRUCTION DE LA REQUETE
+                ->get();                 // JE VEUX OBTENIR LES RESULTATS
 
-                    $tabAssoJson["annonces"] = $tabAnnonce; 
+                $tabAssoJson["annonces"] = $tabAnnonce; 
 
-                }
+            }
                 
         }
         return $tabAssoJson;
