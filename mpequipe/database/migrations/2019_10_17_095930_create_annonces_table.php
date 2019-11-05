@@ -25,18 +25,22 @@ class CreateAnnoncesTable
             // https://laravel.com/docs/6.x/migrations#creating-columns
             /*
             DEFINIR LA TABLE SQL annonces
-            id          BIGINT          INDEX=PRIMARY   A_I (LARAVEL LE FAIT POUR NOUS)
-            titre       VARCHAR(191)
-            contenu     TEXT
-            photo       VARCHAR(191)
-            adresse     VARCHAR(191)
-            categorie   VARCHAR(191)
-            prix        DECIMAL(10,2)
+            id              BIGINT          INDEX=PRIMARY   A_I (LARAVEL LE FAIT POUR NOUS)
+            titre           VARCHAR(191)
+            dateEvenement   DATE
+            contenu         TEXT
+            photo           VARCHAR(191)
+            adresse         VARCHAR(191)
+            codePostal      VARCHAR(191)
+            categorie       VARCHAR(191)
+            prix            DECIMAL(10,2)
             */
             $table->string('titre');	
+            $table->date('dateEvenement');	
             $table->text('contenu');	
             $table->string('photo');	
             $table->string('adresse');	
+            $table->string('codePostal');	
             $table->string('categorie');	
             $table->decimal('prix', 10, 2);
 
