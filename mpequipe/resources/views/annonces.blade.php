@@ -107,6 +107,7 @@ form input, form textarea, form button {
 // ON FAIT UNE SEULE REQUETE 
 // ET DANS LES RESULTATS LES COLONNES DE users 
 // SONT COMME DES COLONNES DE annonces
+// (NOTE: ON FAIT UN INNER JOIN CE QUI ENLEVE LES ANNONCES SANS USER)
 $tabAnnonce = \App\Annonce
                     ::join('users', 'users.id', '=', 'annonces.user_id')
                     ->latest("annonces.updated_at")   // CONSTRUCTION DE LA REQUETE
@@ -139,7 +140,7 @@ foreach($tabAnnonce as $annonce)
     // POUR CHAQUE ANNONCE, JE FAIS UNE REQUETE SUPPLEMENTAIRE 
     // POUR RECUPERER LES INFOS SUR User
     $auteur = App\User::find($annonce->user_id);
-    
+
     // LES COLONNES SONT DES PROPRIETES 
     // DES OBJETS DE LA CLASSE Annonce
 
