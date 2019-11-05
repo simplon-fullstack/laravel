@@ -1125,7 +1125,9 @@ https://laravel.com/docs/5.8/authentication#included-authenticating
                             $annonce->save();
 
 
+## LARAVEL ET RELATIONS ENTRE TABLES
 
+https://laravel.com/docs/4.2/eloquent#relationships
 
 
 
