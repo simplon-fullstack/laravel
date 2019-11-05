@@ -1043,10 +1043,86 @@ https://laravel.com/docs/5.8/authentication#included-authenticating
 
 
 
+## ORM : Object Relationship Mapping
+
+    PHP Orienté Objet
+    SQL BDD Relationnelles
+
+    CRUD
+    AVEC DES OBJETS PHP JE DOIS MANIPULER DES TABLES SQL RELATIONNELLES
+
+    Mapping: techniques pour passer 
+    d'un univers PHP orienté objet
+    à un univers SQL relationnel
+
+    * EN Programmation Orienté Objet
+
+    classe
+        methodes
+        propriétés
+    objet instanciés à partir de la classe
+        propriétés d'objet (valeur)
+
+    * EN SQL
+
+    database
+        tables
+            colonnes
+            lignes  (valeurs)
+
+    * ON SE PREND PAS TROP LA TETE
+
+    TABLE SQL   => CLASSE PHP
+        colonne         propriété d'objet
+        ligne           un objet instancié depuis la classe
+        valeur          la valeur stockée dans la propriété d'objet
+
+    TABLE SQL annonces              <=> CLASSE PHP Annonce 
+    avec colonnes   id                          propriétés d'objet  ->id                   
+                    titre                                           ->titre
+                    codePostal
+                    ...
+    avec ligne                            $annonce EST UN OBJET DE LA CLASSE Annonce
 
 
 
 
+
+    POUR FAIRE LE CRUD SQL EN POO
+    JE PASSE PAR DES METHODES SUR LES OBJETS
+
+    (PERSISTENCE => STOCKAGE => INFORMATIONS PERENNES)
+    (ON NE PERD PAS LES INFOS A LA FIN DU PROGRAMME PHP, ON LES PERSISTE EN BASE DE DONNEES)
+
+
+    * CREATE    (PERSISTENCE => JE VEUX MEMORISER LES VALEURS PHP EN BASE DE DONNEES)
+
+                    Annonce::create($tabInput);
+
+    * READ UNE LIGNE
+
+                    $annonce = Annonce::find($id);
+
+    * READ PLUSIEURS LIGNES
+
+                    $tabAnnonce = \App\Annonce
+                    // ON FILTRE SUR user_id POUR OBTENIR 
+                    // SEULEMENT LES ANNONCES DE L'UTILSATEUR CONNECTE
+                    ::where([
+                        [ "codePostal",     "=", $codePostal],
+                        [ "dateEvenement",  ">=", $dateJour],
+                    ])
+                    ->latest("updated_at")   // CONSTRUCTION DE LA REQUETE
+                    ->get();                 // JE VEUX OBTENIR LES RESULTATS
+
+    * DELETE    (PERSISTENCE)
+                            $annonce->delete();
+
+    * UPDATE    (PERSISTENCE)
+                            $annonce->fill($tabInput);
+
+                            // POUR ENREGISTRER DANS LA TABLE SQL
+                            $annonce->save();
 
 
 

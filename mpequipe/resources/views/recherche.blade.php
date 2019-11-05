@@ -135,6 +135,8 @@ $tabAnnonce = \App\Annonce
 
 // debug
 // print_r($tabAnnonce);
+// $annonce EST UN OBJET DE LA CLASSE Annonce
+// ET CONTIENT LES INFOS D'UNE LIGNE DE LA TABLE SQL annonces
 foreach($tabAnnonce as $annonce)
 {
     // LES COLONNES SONT DES PROPRIETES 
