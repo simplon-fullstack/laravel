@@ -103,8 +103,21 @@ form input, form textarea, form button {
                 @csrf
             </form>
         </section>
-        <section>
-            <h3>RECHERCHER DES ANNONCES</h3>
+        <section v-if="annonces.length > 0">
+            <h3>RESULTATS DE RECHERCHE DES ANNONCES</h3>
+            <div class="listeAnnonce">
+                <article v-for="annonce in annonces">
+                    <img :src="annonce.photo">
+                    <h5>@{{ annonce.categorie }} | @{{ annonce.prix }} euros</h5>
+                    <h4>@{{ annonce.titre }}</h4>
+                    <p>@{{ annonce.contenu }}</p>
+                    <h5>@{{ annonce.id }}</h5>
+                </article>
+            </div>
+        </section>
+
+        <section v-if="annonces.length == 0" >
+            <h3>LISTE INITIALE DES ANNONCES</h3>
             <div class="listeAnnonce">
 <?php
 // ON VA AFFICHER DES ANNONCES AVEC PHP
@@ -166,10 +179,24 @@ CODEHTML;
         fetch('annonce/rechercher', {
             method: 'POST',
             body: formData  // TRANSMET LES INFOS DU FORMULAIRE DANS LA REQUETE AJAX
+        })
+        .then(function(response) {
+            // CONVERTIT LA REPONSE DU SERVEUR EN OBJET JSON 
+            return response.json(); 
+        })
+        .then(function(objetJSON) {
+            // ON PEUT MANIPULER UN OBJET JS
+            console.log(objetJSON);
+            // AVEC VUEJS JE CENTRALISE LES INFOS DANS DES VARIABLES VUEJS
+            if (objetJSON.annonces && app.annonces) {
+                // JE GARDE LA LISTE DES RESULTATS DANS UNE VARIABLE VUEJS
+                app.annonces = objetJSON.annonces;
+            }
         });
     }
   },
   data: {
+    annonces: [],       // MA VARIABLE VUEJS QUI GARDE EN MEMOIRE LA LISTE DES ANNONCES
     message: 'Hello Vue !'
   }
 })
