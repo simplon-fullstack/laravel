@@ -97,6 +97,8 @@ form input, form textarea, form button {
             <h3>FORMULAIRE DE RECHERCHE DES ANNONCES</h3>
             <form @submit.prevent="rechercherAjax" action="">
                 <input type="text" name="codePostal" required placeholder="entrez un code postal">
+                <input type="text" name="dateDebut" placeholder="entrez une date de début">
+                <input type="text" name="dateFin" placeholder="entrez une date de fin">
                 <button type="submit">LANCER LA RECHERCHE</button>
                 <!-- PROTECTION DE LARAVEL CONTRE LES ATTAQUES CSRF -->
                 <!-- Sécurité: Cross Site Request Forgery -->
@@ -104,7 +106,7 @@ form input, form textarea, form button {
             </form>
         </section>
         <section v-if="annonces.length > 0">
-            <h3>RESULTATS DE RECHERCHE DES ANNONCES</h3>
+            <h3>RESULTATS DE RECHERCHE DES ANNONCES (@{{ annonces.length }})</h3>
             <div class="listeAnnonce">
                 <article v-for="annonce in annonces">
                     <img :src="annonce.photo">
