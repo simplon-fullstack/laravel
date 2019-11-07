@@ -1163,11 +1163,12 @@ https://laravel.com/docs/4.2/eloquent#relationships
 
     $requetePreparee =
     <<<CODESQL    
-        SELECT * FROM `annonces` WHERE contenu LIKE :motRecherche
+        SELECT * FROM `annonces` 
+        WHERE contenu LIKE :motRecherche
     CODESQL;
 
     envoyerRequeteSQL($requetePreparee, $tabAssoColonneValeur);
-    
+
 
 
 
